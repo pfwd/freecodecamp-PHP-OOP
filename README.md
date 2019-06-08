@@ -8,7 +8,7 @@
 Creating Docker Machine (Optional)
 ```
 $ docker-machine create howtocodewell-oop-php
-$ docker-machine env howtcodewell-oop-php
+$ docker-machine env howtocodewell-oop-php
 $ eval $(docker-machine env howtocodewell-oop-php)
 ```
 
