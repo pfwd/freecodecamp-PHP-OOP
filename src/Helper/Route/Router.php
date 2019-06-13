@@ -1,5 +1,5 @@
 <?php
-namespace Helper\Route;
+namespace App\Helper\Route;
 use Exception;
 
 class Router
@@ -35,6 +35,14 @@ class Router
         }
 
         return $this->routes[$currentURI];
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoutes():array
+    {
+        return $this->routes;
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
-namespace Repository\Type;
+namespace App\Repository\Type;
 
-use Repository\AbstractRepository;
+use App\Repository\AbstractRepository;
 
 class Invoice extends AbstractRepository
 {

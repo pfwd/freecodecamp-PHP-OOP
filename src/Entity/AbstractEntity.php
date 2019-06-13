@@ -1,5 +1,5 @@
 <?php
-namespace Entity;
+namespace App\Entity;
 
 use DateTime;
 

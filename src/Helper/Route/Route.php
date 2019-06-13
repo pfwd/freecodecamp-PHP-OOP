@@ -1,5 +1,5 @@
 <?php
-namespace Helper\Route;
+namespace App\Helper\Route;
 use Exception;
 
 class Route
@@ -36,6 +36,12 @@ class Route
      */
     public function handle(array $options)
     {
+        /**
+         * @todo Needs SOC
+         * 1) Validation
+         * 2) Exceptions
+         * 3) Setting of values
+         */
         if(false === isset($options['pattern'])) {
             throw new Exception('Pattern is required');
         }

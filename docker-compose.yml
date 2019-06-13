@@ -5,7 +5,8 @@ volumes:
 
 services:
   web:
-    image: php:7.3-apache-stretch
+    build:
+      context: .
     ports:
       - 80:80
     volumes:
