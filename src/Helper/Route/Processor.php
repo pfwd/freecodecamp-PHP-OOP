@@ -31,7 +31,7 @@ class Processor
             }
         }
 
-        return $controller->{$route->getMethod()}();
+        return $controller->{$route->getMethods()}();
     }
 
     /**

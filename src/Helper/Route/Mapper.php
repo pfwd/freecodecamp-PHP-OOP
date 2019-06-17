@@ -38,7 +38,7 @@ class Mapper
         }
         // 7) Get method
         // 8) Returning method
-        return $controller->{$route->getMethod()}();
+        return $controller->{$route->getMethods()}();
     }
 
 }
