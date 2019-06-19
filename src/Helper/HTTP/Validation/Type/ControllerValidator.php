@@ -1,11 +1,11 @@
 <?php
-namespace App\Helper\Route\Validation\Type;
+namespace App\Helper\HTTP\Validation\Type;
 
-use App\Helper\Route\Validation\InterfaceValidator;
+use App\Helper\HTTP\Validation\InterfaceValidator;
+use App\Helper\HTTP\Validation\AbstractType;
 use ReflectionClass;
 use ReflectionException;
 
-use App\Helper\Route\Validation\AbstractType;
 
 class ControllerValidator extends AbstractType implements InterfaceValidator
 {

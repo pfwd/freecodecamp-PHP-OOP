@@ -1,5 +1,5 @@
 <?php
-namespace App\Helper\Route;
+namespace App\Helper\HTTP\Route;
 use Exception;
 
 class Mapper

@@ -1,7 +1,7 @@
 <?php
-namespace App\Helper\Route;
+namespace App\Helper\HTTP\Route;
 
-use App\Helper\Route\Validation\Validation;
+use App\Helper\HTTP\Route\Validation\Validation;
 
 class Factory
 {

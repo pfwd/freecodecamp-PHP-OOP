@@ -1,9 +1,9 @@
 <?php
-namespace Helper\Route\Validation;
+namespace Helper\HTTP\Validation;
 
-use App\Helper\Route\Validation\Type\ControllerValidator;
-use App\Helper\Route\Validation\Type\MethodValidator;
-use App\Helper\Route\Validation\Validation;
+use App\Helper\HTTP\Validation\Type\ControllerValidator;
+use App\Helper\HTTP\Validation\Type\MethodValidator;
+use App\Helper\HTTP\Validation\Validation;
 
 class ValidationTest extends \Codeception\Test\Unit
 {

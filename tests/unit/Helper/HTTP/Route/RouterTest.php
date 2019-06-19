@@ -1,9 +1,9 @@
 <?php
-namespace Helper\Route;
+namespace Helper\HTTP\Route;
 
 use App\Controller\Type\Home;
-use App\Helper\Route\Route;
-use App\Helper\Route\Router;
+use App\Helper\HTTP\Route\Route;
+use App\Helper\HTTP\Route\Router;
 
 class RouterTest extends \Codeception\Test\Unit
 {
