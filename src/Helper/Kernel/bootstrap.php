@@ -2,7 +2,7 @@
 use App\Helper\HTTP\Route\Factory;
 use App\Helper\HTTP\Validation\Validation;
 use App\Helper\HTTP\Validation\Type;
-use App\Helper\HTTP\Validator;
+use App\Helper\HTTP\Route\Validator;
 
 $routeData = require_once BASE_PATH.'app/config/routing.php';
 

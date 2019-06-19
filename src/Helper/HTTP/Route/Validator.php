@@ -1,7 +1,7 @@
 <?php
 namespace App\Helper\HTTP\Route;
 
-use App\Helper\HTTP\Route\Validation\Validation;
+use App\Helper\HTTP\Validation\Validation;
 use Exception;
 
 class Validator
