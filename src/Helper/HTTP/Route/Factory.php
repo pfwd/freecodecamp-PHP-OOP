@@ -1,8 +1,6 @@
 <?php
 namespace App\Helper\HTTP\Route;
 
-use App\Helper\HTTP\Route\Validation\Validation;
-
 class Factory
 {
     /**
@@ -42,19 +40,5 @@ class Factory
 
         return $route;
     }
-
-//    /**
-//     * @param Route $route
-//     */
-//    protected function process(Route $route)
-//    {
-//        $isValid = $this->validation->validate($route);
-//
-//        if ($isValid) {
-//            $this->routes[] = $route;
-//        }
-//    }
-
-
 
 }

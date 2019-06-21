@@ -17,5 +17,6 @@ $validation->setValidators([
 // Make routes
 $routeFactory = new Factory();
 $routes = $routeFactory->makeRoutes($routeData);
-$isValid = Validator::validate($routes, $validation);
+Validator::validate($routes, $validation);
 
+return $routes;
