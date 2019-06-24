@@ -23,12 +23,13 @@ class InvoicePageCest
      * @param AcceptanceTester $I
      *
      * @group invoice
+     * @group invoice-get-by-id
      */
     public function invoiceTest(AcceptanceTester $I)
     {
         $I->wantTo('Test the response code for the invoice');
         $I->amOnPage('/invoice/123');
-        $I->canSee('This is a invoice');
+        $I->canSee('This is a invoice with the ID of 123');
         $I->seeResponseCodeIs(200);
     }
 

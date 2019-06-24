@@ -10,63 +10,51 @@ class Locator
      * @var Request
      */
     private $request;
+
     /**
      * @var array
      */
-    private $routes;
+    private $routes = [];
 
-    const DELIMITER = '#';
+    /**
+     * @var URIPatternBuilder
+     */
+    private $URIPatternBuilder;
 
     /**
      * Locator constructor.
      *
-     * @param Request $request
-     * @param array $routes
+     * @param URIPatternBuilder $URIPatternBuilder
+     * @param Request|null      $request
+     * @param array             $routes
      */
-    public function __construct(Request $request, array $routes = [])
+    public function __construct(URIPatternBuilder $URIPatternBuilder, Request $request = null, array $routes = [])
     {
+        $this->URIPatternBuilder = $URIPatternBuilder;
         $this->request = $request;
-
-        $this->setRoutes($routes);
-
-        $this->routes = $routes;
-    }
-
-    /**
-     * @param array $routes
-     *
-     * @return $this
-     */
-    public function setRoutes(array $routes) {
         $this->routes = $routes;
 
-        return $this;
+        if(null === $request) {
+            $this->request = new Request();
+        }
     }
 
     /**
-     * @param Route $route
-     *
-     * @return string
-     */
-    public static function createPattern(Route $route): string
-    {
-        return self::DELIMITER . '^'.$route->getPattern() . '$'.self::DELIMITER;
-    }
-
-    /**
-     * @param Route $routeToCheck
+     * @param string $URI
      * @param string $queryString
      *
-     * @return Route
+     * @return null|array
      */
-    public function routeMatch(Route $routeToCheck, string $queryString):?Route
+    public function matchURI(string $URI, string $queryString):?array
     {
         $foundRoute = null;
-        $check = preg_match(self::createPattern($routeToCheck), $queryString, $matches);
-        if($check) {
-            $foundRoute = $routeToCheck;
+        preg_match($URI, $queryString, $matches);
+
+        if(false === empty($matches)) {
+            return $matches;
         }
-        return $foundRoute;
+
+        return null;
     }
 
     /**
@@ -75,17 +63,56 @@ class Locator
     public function locate():?Route
     {
         $foundRoute = null;
-
         $queryString = $this->request->getPath();
 
         foreach($this->routes as $route) {
-            $foundRoute = $this->routeMatch($route, $queryString);
-            if($foundRoute instanceof Route) {
+            $URI = $this->createURI($route->getPattern(), $route->getParameters());
+
+            $matches = $this->matchURI($URI, $queryString);
+            if(false === empty($matches)) {
+                $this->handleRequestParameters($route, $matches);
+                $foundRoute = $route;
                 break;
             }
         }
 
         return $foundRoute;
+    }
+
+    /**
+     * @param string $raw
+     * @param array  $parameters
+     *
+     * @return string
+     */
+    public function createURI(string $raw = '', array $parameters = []): string
+    {
+        return $this->URIPatternBuilder
+            ->setRaw($raw)
+            ->setParameters($parameters)
+            ->build()
+        ;
+    }
+
+    /**
+     * @param Route $route
+     * @param array   $parameters
+     *
+     * @return Request
+     */
+    public function handleRequestParameters(Route $route, array $parameters = []): Request
+    {
+        if(isset($parameters[0])) {
+            unset($parameters[0]);
+        }
+
+        $parameters = array_values($parameters);
+
+        $updated = array_combine(array_keys($route->getParameters()), $parameters);
+
+        $this->request->setParameters($updated);
+
+        return $this->request;
     }
 
 }

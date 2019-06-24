@@ -21,6 +21,11 @@ class Route
     private $methods = [];
 
     /**
+     * @var array
+     */
+    private $parameters = [];
+
+    /**
      * @return string
      */
     public function getPattern(): string
@@ -90,6 +95,24 @@ class Route
     public function setAction(string $action): Route
     {
         $this->action = $action;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param array $parameters
+     * @return Route
+     */
+    public function setParameters(array $parameters): Route
+    {
+        $this->parameters = $parameters;
         return $this;
     }
 

@@ -28,7 +28,8 @@ class RequestTest extends \Codeception\Test\Unit
 
         $this->assertEmpty($route->getPath());
         $this->assertEmpty($route->getMethod());
-
+        $this->assertEmpty($route->getParameters());
+        $this->assertIsArray($route->getParameters());
     }
 
     /**
@@ -94,6 +95,60 @@ class RequestTest extends \Codeception\Test\Unit
         $route->setMethod('get');
 
         $this->assertSame('GET', $route->getMethod());
+
+    }
+
+    /**
+     * @group request
+     * @group request-add-parameter
+     */
+    public function testAddParameter()
+    {
+        $route = new Request();
+
+        $route->addParameter('id', 123);
+
+        $this->assertSame(123, $route->getParameter('id'));
+
+    }
+
+    /**
+     * @group request
+     * @group request-add-parameter
+     */
+    public function testSetParameters()
+    {
+        $route = new Request();
+
+        $route->setParameters([
+            'id' => 123
+        ]);
+
+        $this->assertArrayHasKey('id', $route->getParameters());
+
+    }
+
+    /**
+     * @group request
+     * @group request-add-parameter
+     */
+    public function testGetDefaultParameter()
+    {
+        $route = new Request();
+
+        $this->assertSame(345, $route->getParameter('id', 345));
+
+    }
+
+    /**
+     * @group request
+     * @group request-add-parameter
+     */
+    public function testGetNullParameter()
+    {
+        $route = new Request();
+
+        $this->assertNull($route->getParameter('id'));
 
     }
 }

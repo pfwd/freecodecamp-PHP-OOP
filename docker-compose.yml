@@ -11,7 +11,7 @@ services:
       - 80:80
     volumes:
       - .:/var/www/html
-      - ./apache/conf/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./apache/conf/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
 
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public

@@ -13,18 +13,21 @@ return [
         'pattern' => '/invoice',
         'controller' => Type\Invoice::class,
         'method' => ['GET'],
-        'action' => 'index'
+        'action' => 'dashboard'
     ],
     [
-        'pattern' => '/invoice/([0-9]*)',
+        'pattern' => '/invoice/{id}',
         'controller' => Type\Invoice::class,
         'method' => ['GET'],
-        'action' => 'index'
+        'action' => 'index',
+        'parameters' => [
+            'id' => '([0-9]*)'
+        ]
     ],
     [
-        'pattern' => '/invoice/([0-9]*)/edit/([0-9]*)',
+        'pattern' => '/invoice/([0-9]*)/edit',
         'controller' => Type\Invoice::class,
         'method' => ['GET'],
-        'action' => 'index'
+        'action' => 'edit'
     ],
 ];

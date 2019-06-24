@@ -36,6 +36,7 @@ class Factory
             ->setController($options['controller'])
             ->setMethods($options['method'])
             ->setPattern($options['pattern'])
+            ->setParameters((isset($options['parameters']) ? $options['parameters'] : []) )
         ;
 
         return $route;

@@ -3,6 +3,7 @@ namespace Helper\HTTP\Locator;
 
 
 use App\Helper\HTTP\Locator\Locator;
+use App\Helper\HTTP\Locator\URIPatternBuilder;
 use App\Helper\HTTP\Request\Request;
 use App\Helper\HTTP\Route\Route;
 
@@ -28,7 +29,7 @@ class RequestTest extends \Codeception\Test\Unit
     public function testDefault()
     {
         $request = new Request('/', 'GET');
-        $locator = new Locator($request);
+        $locator = new Locator(new URIPatternBuilder(), $request);
 
         $this->assertNull($locator->locate());
 
@@ -45,7 +46,7 @@ class RequestTest extends \Codeception\Test\Unit
             ->setMethods(['GET'])
             ;
         $request = new Request('/invoice/123', 'GET');
-        $locator = new Locator($request, [$route]);
+        $locator = new Locator(new URIPatternBuilder(), $request, [$route]);
 
         $this->assertInstanceOf(Route::class, $locator->locate());
 
@@ -58,11 +59,14 @@ class RequestTest extends \Codeception\Test\Unit
     public function testInvoiceEdit()
     {
         $route = new Route();
-        $route->setPattern('/invoice/([0-9]*)/edit')
+        $route->setPattern('/invoice/{id}/edit')
             ->setMethods(['GET'])
+            ->setParameters([
+                'id' => '([0-9]*)'
+            ])
         ;
         $request = new Request('/invoice/123/edit', 'GET');
-        $locator = new Locator($request, [$route]);
+        $locator = new Locator(new URIPatternBuilder(), $request, [$route]);
 
         $this->assertInstanceOf(Route::class, $locator->locate());
 
@@ -75,36 +79,30 @@ class RequestTest extends \Codeception\Test\Unit
     public function testInvoiceItemEdit()
     {
         $route1 = new Route();
-        $route1->setPattern('/invoice/([0-9]*)/item/([0-9]*)/edit')
+        $route1->setPattern('/invoice/{invoice_id}/item/{item_id}/edit')
             ->setMethods(['GET'])
+            ->setParameters([
+                'invoice_id' => '([0-9]*)',
+                'item_id' => '([0-9]*)',
+            ])
         ;
         $route2 = new Route();
-        $route2->setPattern('/invoice/([0-9]*)/item/([0-9]*)/not-valid')
+        $route2->setPattern('/invoice/{invoice_id}/item/{item_id}/not-valid')
             ->setMethods(['GET'])
+            ->setParameters([
+                'invoice_id' => '([0-9]*)',
+                'item_id' => '([0-9]*)',
+            ])
         ;
         $request = new Request('/invoice/123/item/456/edit', 'GET');
-        $locator = new Locator($request, [$route1, $route2]);
+        $locator = new Locator(new URIPatternBuilder(), $request, [$route1, $route2]);
 
         $foundRoute = $locator->locate();
 
         $this->assertInstanceOf(Route::class, $foundRoute);
-        $this->assertSame('/invoice/([0-9]*)/item/([0-9]*)/edit', $foundRoute->getPattern());
+        $this->assertSame('/invoice/{invoice_id}/item/{item_id}/edit', $foundRoute->getPattern());
 
     }
 
-    /**
-     * @group locator
-     * @group locator-pattern-create
-     */
-    public function testPatternCreate()
-    {
-
-        $route = new Route();
-        $route->setPattern('/invoice/([0-9]*)');
-        $pattern = Locator::createPattern($route);
-
-        $this->assertSame('#^/invoice/([0-9]*)$#',$pattern);
-
-    }
 
 }

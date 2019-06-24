@@ -13,6 +13,11 @@ class Request
     private $method = '';
 
     /**
+     * @var array
+     */
+    private $parameters = [];
+
+    /**
      * Request constructor.
      *
      * @param string $queryString
@@ -69,6 +74,53 @@ class Request
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
 
+    /**
+     * @param array $parameters
+     * @return Request
+     */
+    public function setParameters(array $parameters): Request
+    {
+        $this->parameters = $parameters;
+        foreach($parameters as $key => $value) {
+            $this->addParameter($key, $value);
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     * @return Request
+     */
+    public function addParameter(string $key, $value) :Request
+    {
+        $this->parameters[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param null|mixed $default
+     *
+     * @return mixed
+     */
+    public function getParameter(string $key, $default = null)
+    {
+        $value = $default;
+        if(isset($this->parameters[$key])) {
+            $value = $this->parameters[$key];
+        }
+
+        return $value;
+    }
 
 }

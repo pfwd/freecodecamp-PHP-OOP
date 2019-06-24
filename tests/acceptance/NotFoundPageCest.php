@@ -16,5 +16,7 @@ class NotFoundPageCest
         $I->wantTo('Test the response code for the invoice');
         $I->amOnPage('/not-found');
         $I->seeResponseCodeIs(404);
+        $I->canSee('Page Not Found');
+        $I->canSeeInTitle('Page Not Found');
     }
 }
