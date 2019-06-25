@@ -1,9 +1,7 @@
 <?php
 use App\Helper\Kernel\Kernel;
 
-require_once '../app/config/config.php';
-require BASE_PATH.'vendor/autoload.php';
-$routes = require_once KERNEL_PATH.'bootstrap.php';
+$routes = require_once $_SERVER['DOCUMENT_ROOT'] . '/../app/config/bootstrap.php';
 
 try {
     $response = Kernel::boot($routes);
