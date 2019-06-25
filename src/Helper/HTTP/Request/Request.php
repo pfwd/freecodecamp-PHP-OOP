@@ -1,7 +1,7 @@
 <?php
 namespace App\Helper\HTTP\Request;
 
-class Request
+class   Request
 {
     /**
      * @var string
@@ -96,11 +96,11 @@ class Request
     }
 
     /**
-     * @param string $key
-     * @param $value
+     * @param string     $key
+     * @param null|mixed $value
      * @return Request
      */
-    public function addParameter(string $key, $value) :Request
+    public function addParameter(string $key, $value = null) :Request
     {
         $this->parameters[$key] = $value;
 
