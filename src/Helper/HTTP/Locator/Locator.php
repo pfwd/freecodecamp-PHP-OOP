@@ -31,7 +31,6 @@ class Locator
     public function __construct(URIPatternBuilder $URIPatternBuilder, Request $request = null, array $routes = [])
     {
         $this->URIPatternBuilder = $URIPatternBuilder;
-        $this->request = $request;
         $this->routes = $routes;
 
         if(null === $request) {
@@ -110,7 +109,9 @@ class Locator
 
         $updated = array_combine(array_keys($route->getParameters()), $parameters);
 
-        $this->request->setParameters($updated);
+        if($updated) {
+            $this->request->setParameters($updated);
+        }
 
         return $this->request;
     }
