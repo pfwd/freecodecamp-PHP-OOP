@@ -13,7 +13,7 @@ class NotFoundPageCest
      */
     public function pageNotFoundTest(AcceptanceTester $I)
     {
-        $I->wantTo('Test the response code for the invoice');
+        $I->wantTo('Test the response code for 404 page');
         $I->amOnPage('/not-found');
         $I->seeResponseCodeIs(404);
         $I->canSee('Page Not Found');

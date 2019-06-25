@@ -41,10 +41,13 @@ class RequestTest extends \Codeception\Test\Unit
      */
     public function testInvoiceID()
     {
-        $route = new Route();
-        $route->setPattern('/invoice/([0-9]*)')
+         $route = new Route();
+        $route->setPattern('/invoice/{id}')
             ->setMethods(['GET'])
-            ;
+            ->setParameters([
+                'id' => '([0-9]*)'
+            ])
+        ;
         $request = new Request('/invoice/123', 'GET');
         $locator = new Locator(new URIPatternBuilder(), $request, [$route]);
 

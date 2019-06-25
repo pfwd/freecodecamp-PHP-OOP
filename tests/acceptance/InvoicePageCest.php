@@ -11,11 +11,11 @@ class InvoicePageCest
      *
      * @group invoice
      */
-    public function invoiceListTest(AcceptanceTester $I)
+    public function invoiceDashboardTest(AcceptanceTester $I)
     {
-        $I->wantTo('Test the response code for the invoice list page');
+        $I->wantTo('Test the response code for the invoice dashboard page');
         $I->amOnPage('/invoice');
-        $I->canSee('This is a invoice');
+        $I->canSee('This is the invoice dashboard');
         $I->seeResponseCodeIs(200);
     }
 
@@ -29,7 +29,7 @@ class InvoicePageCest
     {
         $I->wantTo('Test the response code for the invoice');
         $I->amOnPage('/invoice/123');
-        $I->canSee('This is a invoice with the ID of 123');
+        $I->canSee('This is the invoice page for invoice 123    ');
         $I->seeResponseCodeIs(200);
     }
 
