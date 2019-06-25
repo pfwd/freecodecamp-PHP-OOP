@@ -34,8 +34,10 @@ class Locator
         $this->routes = $routes;
 
         if(null === $request) {
-            $this->request = new Request();
+            $request = new Request();
         }
+
+        $this->request = $request;
     }
 
     /**
