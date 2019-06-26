@@ -1,4 +1,5 @@
 DirectoryIndex index.php
+ErrorDocument 404 /var/www/html/public/404.html
 
 # Enable rewrite engine
 RewriteEngine on

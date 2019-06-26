@@ -3,6 +3,7 @@ namespace App\Helper\HTTP\Locator;
 
 use App\Helper\HTTP\Request\Request;
 use App\Helper\HTTP\Route\Route;
+use App\Helper\HTTP\URI\URIBuilder;
 
 class Locator
 {
@@ -17,20 +18,13 @@ class Locator
     private $routes = [];
 
     /**
-     * @var URIPatternBuilder
-     */
-    private $URIPatternBuilder;
-
-    /**
      * Locator constructor.
      *
-     * @param URIPatternBuilder $URIPatternBuilder
      * @param Request|null      $request
      * @param array             $routes
      */
-    public function __construct(URIPatternBuilder $URIPatternBuilder, Request $request = null, array $routes = [])
+    public function __construct(Request $request = null, array $routes = [])
     {
-        $this->URIPatternBuilder = $URIPatternBuilder;
         $this->routes = $routes;
 
         if(null === $request) {
@@ -67,7 +61,8 @@ class Locator
         $queryString = $this->request->getPath();
 
         foreach($this->routes as $route) {
-            $URI = $this->createURI($route->getPattern(), $route->getParameters());
+
+            $URI = URIBuilder::build($route->getPattern(), $route->getParameters());
 
             $matches = $this->matchURI($URI, $queryString);
             if(false === empty($matches)) {
@@ -78,21 +73,6 @@ class Locator
         }
 
         return $foundRoute;
-    }
-
-    /**
-     * @param string $raw
-     * @param array  $parameters
-     *
-     * @return string
-     */
-    public function createURI(string $raw = '', array $parameters = []): string
-    {
-        return $this->URIPatternBuilder
-            ->setRaw($raw)
-            ->setParameters($parameters)
-            ->build()
-        ;
     }
 
     /**
@@ -117,5 +97,4 @@ class Locator
 
         return $this->request;
     }
-
 }

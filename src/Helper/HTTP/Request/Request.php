@@ -1,7 +1,7 @@
 <?php
 namespace App\Helper\HTTP\Request;
 
-class   Request
+class Request
 {
     /**
      * @var string

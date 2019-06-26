@@ -3,7 +3,6 @@ namespace Helper\HTTP\Locator;
 
 
 use App\Helper\HTTP\Locator\Locator;
-use App\Helper\HTTP\Locator\URIPatternBuilder;
 use App\Helper\HTTP\Request\Request;
 use App\Helper\HTTP\Route\Route;
 
@@ -29,7 +28,7 @@ class RequestTest extends \Codeception\Test\Unit
     public function testDefault()
     {
         $request = new Request('/', 'GET');
-        $locator = new Locator(new URIPatternBuilder(), $request);
+        $locator = new Locator($request);
 
         $this->assertNull($locator->locate());
 
@@ -49,7 +48,7 @@ class RequestTest extends \Codeception\Test\Unit
             ])
         ;
         $request = new Request('/invoice/123', 'GET');
-        $locator = new Locator(new URIPatternBuilder(), $request, [$route]);
+        $locator = new Locator($request, [$route]);
 
         $this->assertInstanceOf(Route::class, $locator->locate());
 
@@ -69,7 +68,7 @@ class RequestTest extends \Codeception\Test\Unit
             ])
         ;
         $request = new Request('/invoice/123/edit', 'GET');
-        $locator = new Locator(new URIPatternBuilder(), $request, [$route]);
+        $locator = new Locator($request, [$route]);
 
         $this->assertInstanceOf(Route::class, $locator->locate());
 
@@ -98,7 +97,7 @@ class RequestTest extends \Codeception\Test\Unit
             ])
         ;
         $request = new Request('/invoice/123/item/456/edit', 'GET');
-        $locator = new Locator(new URIPatternBuilder(), $request, [$route1, $route2]);
+        $locator = new Locator($request, [$route1, $route2]);
 
         $foundRoute = $locator->locate();
 
