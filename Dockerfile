@@ -16,15 +16,15 @@ RUN apt-get update          \
         libjpeg62-turbo-dev \
         libmcrypt-dev       \
         libzip-dev          \
-    && pecl install mcrypt-1.0.1                                                                    \
+    && pecl install mcrypt-1.0.1 xdebug                                                             \
     && docker-php-ext-install mysqli pdo_mysql iconv simplexml                                      \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/  \
     && docker-php-ext-configure zip --with-libzip                                                   \
     && docker-php-ext-install gd zip                                                                \
-    && docker-php-ext-enable mcrypt                                                                 \
+    && docker-php-ext-enable mcrypt xdebug                                                          \
     && apt-get clean all                                                                            \
     && rm -rvf /var/lib/apt/lists/*                                                                 \
-    && a2enmod rewrite
+    && a2enmod rewrite headers
 
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/bin
 ENV PATH /root/.composer/vendor/bin:$PATH
