@@ -25,9 +25,12 @@ return [
         ]
     ],
     [
-        'pattern' => '/invoice/([0-9]*)/edit',
+        'pattern' => '/invoice/{id}/edit',
         'controller' => Type\Invoice::class,
         'method' => ['GET'],
-        'action' => 'edit'
+        'action' => 'edit',
+        'parameters' => [
+            'id' => '([0-9]*)'
+        ]
     ],
 ];

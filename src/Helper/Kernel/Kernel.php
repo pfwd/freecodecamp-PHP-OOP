@@ -1,7 +1,7 @@
 <?php
 namespace App\Helper\Kernel;
 
-use App\Helper\HTTP\Factory\Type\ServerFactory;
+use App\Helper\HTTP\Request\Factory\Type\ServerFactory;
 use App\Helper\HTTP\Locator\Locator;
 use App\Helper\HTTP\Route\Route;
 use Exception;

@@ -74,4 +74,37 @@ class FactoryTest extends \Codeception\Test\Unit
         $this->assertEquals(count($routes), count($results));
     }
 
+    /**
+     * @group router
+     * @group router-factory-make-routes
+     */
+    public function testMakeRoutes()
+    {
+        $routes = [
+            [
+                'pattern' => '/',
+                'controller' => Type\Home::class,
+                'method' => ['GET'],
+                'action' => 'index'
+            ],
+            [
+                'pattern' => '/invoice/([0-9]*)',
+                'controller' => Type\Invoice::class,
+                'method' => ['GET'],
+                'action' => 'index'
+            ],
+            [
+                'pattern' => '/invoice/([0-9]*)/edit/([0-9]*)',
+                'controller' => Type\Invoice::class,
+                'method' => ['GET'],
+                'action' => 'index'
+            ],
+        ];
+
+        $factory = new Factory();
+
+        $results = $factory->makeRoutes($routes);
+        $this->assertIsArray($results);
+        $this->assertEquals(count($routes), count($results));
+    }
 }

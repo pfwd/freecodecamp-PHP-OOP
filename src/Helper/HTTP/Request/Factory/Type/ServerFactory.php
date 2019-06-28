@@ -1,5 +1,5 @@
 <?php
-namespace App\Helper\HTTP\Factory\Type;
+namespace App\Helper\HTTP\Request\Factory\Type;
 use App\Helper\HTTP\Request\Factory\FactoryInterface;
 use App\Helper\HTTP\Request\Request;
 use Exception;

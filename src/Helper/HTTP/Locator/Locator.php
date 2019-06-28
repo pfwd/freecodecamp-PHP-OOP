@@ -89,6 +89,13 @@ class Locator
 
         $parameters = array_values($parameters);
 
+        // Parameters: [0] => 123
+        // $route->getParameters() : ['id'] => ([0-9]*)
+        // $route->getParameters() Keys : [0] => 'id'
+        // Updated Parameters ['id'] => 123
+        // [<Route.Parameters.Key>] = [<Parameters.value>]
+
+
         $updated = array_combine(array_keys($route->getParameters()), $parameters);
 
         if($updated) {
