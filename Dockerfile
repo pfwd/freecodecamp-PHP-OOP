@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.3-apache
 
 LABEL maintainer="Peter Fisher"
 
@@ -6,7 +6,6 @@ RUN apt-get update          \
     && apt-get install -y   \
         git                 \
         zlib1g-dev          \
-        libmcrypt-dev       \
         zip                 \
         unzip               \
         libxml2-dev         \
@@ -14,14 +13,13 @@ RUN apt-get update          \
         libpng-dev          \
         libfreetype6-dev    \
         libjpeg62-turbo-dev \
-        libmcrypt-dev       \
         libzip-dev          \
-    && pecl install mcrypt-1.0.1 xdebug                                                             \
+    && pecl install xdebug                                                             \
     && docker-php-ext-install mysqli pdo_mysql iconv simplexml                                      \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/  \
     && docker-php-ext-configure zip --with-libzip                                                   \
     && docker-php-ext-install gd zip                                                                \
-    && docker-php-ext-enable mcrypt xdebug                                                          \
+    && docker-php-ext-enable xdebug                                                          \
     && apt-get clean all                                                                            \
     && rm -rvf /var/lib/apt/lists/*                                                                 \
     && a2enmod rewrite headers
