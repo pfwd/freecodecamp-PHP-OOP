@@ -1,8 +1,8 @@
 # FreeCodeCamp PHP OOP Course
 ### By Peter Fisher How To Code Well
 
-- Requirements
-- Installation
+- [Installation](#installation)
+- [Requirements](#requirements)
 
 ## Installation
 Creating Docker Machine (Optional)
