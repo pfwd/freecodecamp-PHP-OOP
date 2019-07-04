@@ -3,6 +3,7 @@
 
 - [Installation](#installation)
 - [Requirements](#requirements)
+- [Testing](#testing)
 
 ## Installation
 Creating Docker Machine (Optional)
@@ -29,3 +30,15 @@ Put the IP in a browser
 - Docker 18.09.2
 - Docker Machine 0.16.1 (Optional)
 - Docker Compose 1.23.2 
+
+## Testing
+Run unit tests
+```
+$ docker-compose exec web vendor/bin/codecept run unit 
+```
+
+Run unit tests with code coverage
+```
+$ docker-compose exec web vendor/bin/codecept run unit --coverage --coverage-xml --coverage-html
+$ open tests/_output/coverage/index.html
+```
