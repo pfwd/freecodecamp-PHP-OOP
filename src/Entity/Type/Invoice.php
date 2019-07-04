@@ -165,4 +165,15 @@ class Invoice extends AbstractEntity
         }
         return false;
     }
+
+    /**
+     * @param null $status
+     * @return Invoice
+     */
+    public function setStatus($status):Invoice
+    {
+        $this->status = $status;
+        return $this;
+    }
+
 }
