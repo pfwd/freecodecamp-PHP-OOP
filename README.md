@@ -6,6 +6,12 @@
 - [Testing](#testing)
 
 ## Installation
+Create `.env` 
+```
+$ cp .env.dist .env
+```
+Modify values in `.env`
+
 Creating Docker Machine (Optional)
 ```
 $ docker-machine create howtocodewell-oop-php

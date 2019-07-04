@@ -22,3 +22,6 @@ services:
     image: mysql:5.7
     volumes:
       - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
