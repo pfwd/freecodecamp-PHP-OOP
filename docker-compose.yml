@@ -16,6 +16,7 @@ services:
 
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    restart: always
 
   db:
     image: mysql:5.7
