@@ -42,3 +42,8 @@ Run unit tests with code coverage
 $ docker-compose exec web vendor/bin/codecept run unit --coverage --coverage-xml --coverage-html
 $ open tests/_output/coverage/index.html
 ```
+
+Run acceptance tests
+```
+$ docker-compose exec web vendor/bin/codecept run acceptance
+```
