@@ -2,6 +2,7 @@
 ### By Peter Fisher How To Code Well
 
 - [Installation](#installation)
+    - [Database](#database)
 - [Requirements](#requirements)
 - [Testing](#testing)
 
@@ -32,6 +33,19 @@ $ docker-machine ip howtocodewell-oop-php
 
 Put the IP in a browser
 
+### Database
+To populate the database run the following command from the host machine. (Change <DB_PASSWORD>)
+```
+$ docker-compose exec -T db mysql -u root --password=<DB_PASSWORD> < mysql/rebuild.sql
+```
+Or from within the container
+```
+$ docker-compose exec db mysql -u root -p
+Enter password: 
+
+mysql> use invoice_app;
+mysql> source /scripts/rebuild.sql
+```
 ## Requirements
 - Docker 18.09.2
 - Docker Machine 0.16.1 (Optional)
