@@ -34,7 +34,9 @@ $ docker-machine ip howtocodewell-oop-php
 Put the IP in a browser
 
 ### Database
-To populate the database run the following command from the host machine. (Change <DB_PASSWORD>)
+*Please note: This will delete the database and create a new one. All data will be lost*
+
+To rebuild the database run the following command from the host machine. (Change <DB_PASSWORD>)
 ```
 $ docker-compose exec -T db mysql -u root --password=<DB_PASSWORD> < mysql/rebuild.sql
 ```
