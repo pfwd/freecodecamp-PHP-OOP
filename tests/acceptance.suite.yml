@@ -10,4 +10,11 @@ modules:
         - PhpBrowser:
             url: http://192.168.99.100
         - \Helper\Acceptance
+        - Db
+    config:
+        Db:
+            dsn: 'mysql:host=db;dbname=invoice_app'
+            user: 'root'
+            password: 'test'
+            reconnect: true
     step_decorators: ~        
