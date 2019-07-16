@@ -3,6 +3,9 @@ version: '3'
 volumes:
   mysql_data:
 
+networks:
+  php_course:
+
 services:
   web:
     build:
@@ -17,6 +20,8 @@ services:
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
     restart: always
+    networks:
+      - php_course
 
   db:
     image: mysql:5.7
@@ -26,3 +31,5 @@ services:
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks:
+      - php_course
