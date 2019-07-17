@@ -19,6 +19,8 @@ services:
 
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    env_file:
+      - .env
     restart: always
     networks:
       - php_course
