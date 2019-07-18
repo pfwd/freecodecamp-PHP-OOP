@@ -3,7 +3,7 @@ namespace App\Entity\Type;
 
 use App\Entity\AbstractEntity;
 
-class Customer extends AbstractEntity
+class Customer extends AbstractEntity implements GenericEntityInterface
 {
     /**
      * @var string

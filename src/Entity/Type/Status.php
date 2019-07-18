@@ -3,7 +3,7 @@ namespace App\Entity\Type;
 
 use App\Entity\AbstractEntity;
 
-class Status extends AbstractEntity
+class Status extends AbstractEntity implements GenericEntityInterface
 {
     /**
      * @var string

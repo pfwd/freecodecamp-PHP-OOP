@@ -6,7 +6,7 @@ use DateTime;
 abstract class AbstractEntity
 {
     /**
-     * @var null|int
+     * @var int
      */
     protected $id;
 
