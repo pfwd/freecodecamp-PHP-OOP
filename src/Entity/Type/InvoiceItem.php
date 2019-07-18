@@ -3,7 +3,7 @@ namespace App\Entity\Type;
 
 use App\Entity\AbstractEntity;
 
-class InvoiceItem extends AbstractEntity
+class InvoiceItem extends AbstractEntity implements GenericEntityInterface
 {
     /**
      * @var string
