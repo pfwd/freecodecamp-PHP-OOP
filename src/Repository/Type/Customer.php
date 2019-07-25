@@ -3,8 +3,15 @@ namespace App\Repository\Type;
 
 use App\Repository\AbstractRepository;
 
-class Status extends AbstractRepository
+class Customer extends AbstractRepository
 {
+    /**
+     * @return mixed
+     */
+    public function save()
+    {
+        // TODO: Implement save() method.
+    }
 
     /**
      * @param int $id

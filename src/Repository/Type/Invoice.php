@@ -5,13 +5,7 @@ use App\Repository\AbstractRepository;
 
 class Invoice extends AbstractRepository
 {
-    /**
-     * @return mixed
-     */
-    public function save()
-    {
-        // TODO: Implement save() method.
-    }
+
 
     /**
      * @param int $id
