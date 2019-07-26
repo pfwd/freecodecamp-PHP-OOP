@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   mysql_data:
+  mysql_data_test:
 
 networks:
   php_course:
@@ -35,3 +36,17 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     networks:
       - php_course
+    restart: always
+
+
+  db_test:
+    image: mysql:5.7
+    volumes:
+      - mysql_data_test:/var/lib/mysql
+      - ./mysql:/scripts
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE_TEST}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks:
+      - php_course
+    restart: always
