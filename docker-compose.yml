@@ -32,8 +32,8 @@ services:
       - mysql_data:/var/lib/mysql
       - ./mysql:/scripts
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DEV_MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DEV_MYSQL_ROOT_PASSWORD}
     networks:
       - php_course
     restart: always
@@ -45,8 +45,8 @@ services:
       - mysql_data_test:/var/lib/mysql
       - ./mysql:/scripts
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE_TEST}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${TEST_MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${TEST_MYSQL_ROOT_PASSWORD}
     networks:
       - php_course
     restart: always
