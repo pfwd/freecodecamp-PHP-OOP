@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://192.168.99.100
+            url: http://localhost
         - \Helper\Acceptance
         - Db
     config:
