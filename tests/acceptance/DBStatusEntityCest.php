@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use App\DB\Connection;
 
 class DBStatusEntityCest
 {
@@ -25,6 +27,37 @@ class DBStatusEntityCest
         $I->seeInDatabase('status', [
             'name' => $entity->getName(),
             'internal_name' => $entity->getInternalName()
+        ]);
+    }
+
+
+    /**
+     * @param AcceptanceTester $I
+     * @group db
+     * @group db-status-entity-update
+     */
+    public function updateTest(AcceptanceTester $I)
+    {
+        $entity = new \App\Entity\Type\Status();
+        $entity->setName('Test Status')
+            ->setInternalName('TEST_STATUS')
+        ;
+        $connection = new App\DB\Connection();
+        $manager = new \App\Manager\StatusManager($connection);
+        $savedEntity = $manager->save($entity);
+
+        $I->seeInDatabase('status', [
+            'name' => $entity->getName(),
+            'internal_name' => $entity->getInternalName(),
+            'id' => $savedEntity->getId()
+        ]);
+
+        $savedEntity->setName('Test Status 2');
+        $savedEntity = $manager->save($savedEntity);
+
+        $I->seeInDatabase('status', [
+            'name' => $savedEntity->getName(),
+            'id' => $savedEntity->getId()
         ]);
     }
 

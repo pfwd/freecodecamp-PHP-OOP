@@ -2,11 +2,11 @@
 namespace App\Manager;
 
 use App\DB\Connection;
-use App\Entity\Type\Status;
-use App\Hydration\StatusHydrator;
+use App\Entity\Type\Customer;
+use App\Hydration\CustomerHydrator;
 use App\Repository\Type\Status as Repository;
 
-class StatusManager extends AbstractManager
+class CustomerManager extends AbstractManager
 {
     /**
      * @var Repository
@@ -19,7 +19,7 @@ class StatusManager extends AbstractManager
     private $connection;
 
     /**
-     * StatusManager constructor.
+     * CustomerManager constructor.
      * @param Connection $connection
      */
     public function __construct(Connection $connection)
@@ -30,31 +30,33 @@ class StatusManager extends AbstractManager
     /**
      * @param int $id
      *
-     * @return Status
+     * @return Customer
      */
-    public function findOne(int $id): Status
+    public function findOne(int $id): Customer
     {
         $row = $this->repository->findOne($id);
-        return StatusHydrator::hydrate($row);
+        return CustomerHydrator::hydrate($row);
     }
 
     /**
-     * @param Status $entity
-     * @return Status
+     * @param Customer $entity
+     * @return Customer
      */
-    public function save(Status $entity): Status
+    public function save(Customer $entity):Customer
     {
         if(null === $entity->getId()){
-            $sql = "INSERT INTO `status` (`name`, `internal_name`) VALUE (?,?);";
+            $sql = "INSERT INTO `customer` (`first_name`, `last_name`, `company_name`) VALUE (?,?,?);";
             $data = [
-                $entity->getName(),
-                $entity->getInternalName()
+                $entity->getFirstName(),
+                $entity->getLastName(),
+                $entity->getCompanyName()
             ];
         } else {
-            $sql = "UPDATE `status` SET `name` =?, `internal_name` = ? WHERE `id` = ?;";
+            $sql = "UPDATE `customer` SET `first_name` =?, `last_name` = ?, `company_name` = ? WHERE `id` = ?;";
             $data = [
-                $entity->getName(),
-                $entity->getInternalName(),
+                $entity->getFirstName(),
+                $entity->getLastName(),
+                $entity->getCompanyName(),
                 $entity->getId()
             ];
         }
