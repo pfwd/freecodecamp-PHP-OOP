@@ -21,7 +21,7 @@ class Invoice extends AbstractEntity implements GenericEntityInterface
     private $items = [];
 
     /**
-     * @var null
+     * @var null|Status
      */
     private $status = null;
 
@@ -60,9 +60,9 @@ class Invoice extends AbstractEntity implements GenericEntityInterface
     }
 
     /**
-     * @return null
+     * @return null|Status
      */
-    public function getStatus()
+    public function getStatus():?Status
     {
         return $this->status;
     }
