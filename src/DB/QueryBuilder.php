@@ -52,9 +52,19 @@ class QueryBuilder
         return $sql;
     }
 
-    public static function insertOrUpdate(): string
+    /**
+     * @param array $data
+     * @param string $table
+     * @param array $where
+     * @return string
+     */
+    public static function insertOrUpdate(array $data, string $table, array $where = []): string
     {
-        $sql = '';
+        if(empty($where)) {
+            $sql = self::insert($data, $table);
+        } else {
+            $sql = self::update($data, $table, $where);
+        }
 
         return $sql;
     }
