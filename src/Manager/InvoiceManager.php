@@ -2,6 +2,7 @@
 namespace App\Manager;
 
 use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Type\Customer;
 use App\Entity\Type\Invoice;
 use App\Entity\Type\Status;
@@ -47,24 +48,17 @@ class InvoiceManager extends AbstractManager
      */
     public function save(Invoice $entity):Invoice
     {
+
         $data = [
-            'reference' => $entity->getReference(),
-            'total' => $entity->getTotal(),
-            'vat' => $entity->getVat()
+            $entity->getReference(),
+            $entity->getTotal(),
+            $entity->getVat(),
         ];
 
-        if ($entity->getStatus() instanceof Status){
-            $data['status_id'] = $entity->getStatus()->getId();
-        }
+        $sql = QueryBuilder::insertOrUpdate($data, 'invoice');
 
-        if(null !== $entity->getId()){
-            $data['id'] = $entity->getId();
-        }
+        
 
-        $sql = 'INSERT INTO `invoice`';
-        $values = '';
-
-        $fields = implode(') , (', array_keys($data));
 
 
 
