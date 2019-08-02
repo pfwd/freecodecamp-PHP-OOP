@@ -53,7 +53,8 @@ class DBStatusEntityCest
         ]);
 
         $savedEntity->setName('Test Status 2');
-        $savedEntity = $manager->save($savedEntity);
+        $savedEntity->setInternalName('TEST');
+        $manager->save($savedEntity);
 
         $I->seeInDatabase('status', [
             'name' => $savedEntity->getName(),

@@ -57,6 +57,9 @@ class DBInvoiceEntityCest
         ]);
 
         $savedEntity->setReference('Test updated reference');
+        $savedEntity->setTotal(1)
+            ->setVAT(1)
+            ;
         $manager->save($savedEntity);
 
         $I->seeInDatabase('invoice', [
