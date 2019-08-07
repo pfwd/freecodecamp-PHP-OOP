@@ -7,37 +7,33 @@ use App\DB\QueryBuilder;
 use App\Entity\Type\Status;
 use App\Hydration\StatusHydrator;
 use App\Repository\Type\Status as Repository;
+use App\Repository\Type\StatusRepository;
 
 class StatusManager extends AbstractManager
 {
     /**
-     * @var Repository
+     * @var StatusRepository
      */
     private $repository;
 
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
      * StatusManager constructor.
-     * @param Connection $connection
+     * @param StatusRepository $repository
      */
-    public function __construct(Connection $connection)
+    public function __construct(StatusRepository $repository)
     {
-        $this->connection = $connection;
+        $this->repository = $repository;
     }
 
     /**
      * @param int $id
      *
-     * @return Status
+     * @return null|Status
      */
-    public function findOne(int $id): Status
+    public function findOne(int $id):? Status
     {
-        $row = $this->repository->findOne($id);
-        return StatusHydrator::hydrate($row);
+        $entity = $this->repository->findOne($id);
+        return $entity;
     }
 
     /**
@@ -46,31 +42,9 @@ class StatusManager extends AbstractManager
      */
     public function save(Status $entity)
     {
-        $data = [
-            'name' => $entity->getName(),
-            'internal_name' => $entity->getInternalName(),
-        ];
-        $table = 'status';
-        $where = [];
-        if (null !== $entity->getId()) {
-            $where['id'] = $entity->getId();
-        }
-        $sql = QueryBuilder::insertOrUpdate($data, $table, $where);
+        $savedEntity = $this->repository->save($entity);
 
-        if (null !== $entity->getId()) {
-            $data['id'] = $entity->getId();
-        }
-
-        $dbCon = $this->connection->open();
-
-        $statement = $dbCon->prepare($sql);
-        $statement->execute(array_values($data));
-
-        if (null === $entity->getId()) {
-            $entity->setId($dbCon->lastInsertId());
-        }
-
-        return $entity;
+        return $savedEntity;
     }
 
 }

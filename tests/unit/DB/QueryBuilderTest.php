@@ -166,6 +166,19 @@ class QueryBuilderTest extends \Codeception\Test\Unit
         $this->assertSame($expected, $sql);
     }
 
+    /**
+     * @group entity
+     * @group db
+     * @group db-query-builder
+     * @group db-query-builder-find-one-by-id
+     */
+    public function testFindOneByID()
+    {
+        $sql = QueryBuilder::findOneBy('status');
+        $expected = "SELECT * FROM `status` WHERE id=:id";
+        $this->assertSame($expected, $sql);
+    }
+
     protected function _before()
     {
     }

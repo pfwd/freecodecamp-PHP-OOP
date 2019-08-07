@@ -3,8 +3,25 @@
 # Suite for unit or integration tests.
 
 actor: UnitTester
+#modules:
+#    enabled:
+#        - Asserts
+#        - \Helper\Unit
+#    step_decorators: ~
+#
+
 modules:
     enabled:
         - Asserts
         - \Helper\Unit
-    step_decorators: ~        
+        - Db
+    config:
+        Db:
+            dsn: 'mysql:host=db_test;dbname=test_invoice_app'
+            user: 'root'
+            password: 'test'
+            reconnect: true
+            dump: 'tests/_data/dump.sql'
+            populate: true
+            cleanup: true
+    step_decorators: ~
