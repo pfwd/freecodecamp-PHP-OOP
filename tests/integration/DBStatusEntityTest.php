@@ -24,7 +24,7 @@ class DBStatusEntityTest extends \Codeception\Test\Unit
      * @group db-status
      * @group db-status-entity-find-one-by-id
      */
-    public function testFindOneByID()
+    public function testSaveStatusAndFindByID()
     {
         $entity = new Status();
         $entity->setName('Hello World2')
@@ -44,7 +44,7 @@ class DBStatusEntityTest extends \Codeception\Test\Unit
      * @group db-status
      * @group db-status-entity-find-one-by-id-not-exists
      */
-    public function testFindOneByIDThatDoesNotExist()
+    public function testFindStatusThatDoesNotExist()
     {
         $entity = new Status();
         $entity->setId(5001);

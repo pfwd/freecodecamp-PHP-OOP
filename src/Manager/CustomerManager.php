@@ -1,78 +1,47 @@
 <?php
 namespace App\Manager;
 
-use App\DB\Connection;
 use App\DB\QueryBuilder;
 use App\Entity\Type\Customer;
 use App\Hydration\CustomerHydrator;
-use App\Repository\Type\Status as Repository;
+use App\Repository\Type\CustomerRepository;
 
 class CustomerManager extends AbstractManager
 {
     /**
-     * @var Repository
+     * @var CustomerRepository
      */
     private $repository;
 
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
      * CustomerManager constructor.
-     * @param Connection $connection
+     * @param CustomerRepository $repository
      */
-    public function __construct(Connection $connection)
+    public function __construct(CustomerRepository $repository)
     {
-        $this->connection = $connection;
+        $this->repository = $repository;
     }
 
     /**
      * @param int $id
      *
-     * @return Customer
+     * @return null|Customer
      */
-    public function findOne(int $id): Customer
+    public function findOne(int $id):? Customer
     {
-        $row = $this->repository->findOne($id);
-        return CustomerHydrator::hydrate($row);
+        $entity = $this->repository->findOne($id);
+        return $entity;
     }
 
     /**
      * @param Customer $entity
      * @return Customer
      */
-    public function save(Customer $entity):Customer
+    public function save(Customer $entity)
     {
-        $data = [
-            'first_name' => $entity->getFirstName(),
-            'last_name' => $entity->getLastName(),
-            'company_name' => $entity->getCompanyName(),
-        ];
+        $savedEntity = $this->repository->save($entity);
 
-        $where = [];
-        if(null !== $entity->getId()) {
-            $where['id'] = $entity->getId();
-        }
-
-        $table = 'customer';
-
-        $sql = QueryBuilder::insertOrUpdate($data, $table, $where);
-
-        if (null !== $entity->getId()) {
-            $data['id'] = $entity->getId();
-        }
-        $dbCon = $this->connection->open();
-
-        $statement = $dbCon->prepare($sql);
-        $statement->execute(array_values($data));
-
-        if(null === $entity->getId()){
-            $entity->setId($dbCon->lastInsertId());
-        }
-
-        return $entity;
+        return $savedEntity;
     }
 
 }
