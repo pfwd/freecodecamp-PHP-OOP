@@ -1,6 +1,8 @@
 <?php
 
 use App\DB\Connection;
+use App\Manager\StatusManager;
+use App\Repository\Type\StatusRepository;
 
 class DBInvoiceEntityCest
 {
@@ -83,8 +85,9 @@ class DBInvoiceEntityCest
             ->setInternalName('TEMP')
         ;
 
-        $connection = new App\DB\Connection();
-        $manager = new \App\Manager\StatusManager($connection);
+        $connection = new Connection();
+        $repository = new StatusRepository($connection);
+        $manager = new StatusManager($repository);
         $savedStatus = $manager->save($status);
 
         $invoice = new \App\Entity\Type\Invoice();

@@ -1,6 +1,8 @@
 <?php
 
 use App\DB\Connection;
+use App\Manager\StatusManager;
+use App\Repository\Type\StatusRepository;
 
 class DBStatusEntityCest
 {
@@ -20,8 +22,9 @@ class DBStatusEntityCest
         $entity->setName('Hello World2')
             ->setInternalName('HELLO_WORLD_2')
             ;
-        $connection = new App\DB\Connection();
-        $manager = new \App\Manager\StatusManager($connection);
+        $connection = new Connection();
+        $repository = new StatusRepository($connection);
+        $manager = new StatusManager($repository);
         $manager->save($entity);
 
         $I->seeInDatabase('status', [
@@ -42,8 +45,9 @@ class DBStatusEntityCest
         $entity->setName('Test Status')
             ->setInternalName('TEST_STATUS')
         ;
-        $connection = new App\DB\Connection();
-        $manager = new \App\Manager\StatusManager($connection);
+        $connection = new Connection();
+        $repository = new StatusRepository($connection);
+        $manager = new StatusManager($repository);
         $savedEntity = $manager->save($entity);
 
         $I->seeInDatabase('status', [

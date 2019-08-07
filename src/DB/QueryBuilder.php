@@ -68,4 +68,13 @@ class QueryBuilder
 
         return $sql;
     }
+
+    /**
+     * @param $table
+     * @return string
+     */
+    public static function findOneBy($table)
+    {
+        return "SELECT * FROM `".$table."` WHERE id=:id";
+    }
 }
