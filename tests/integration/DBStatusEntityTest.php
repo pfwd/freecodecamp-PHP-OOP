@@ -1,20 +1,24 @@
 <?php
 
-namespace Entity;
-
-
 use App\DB\Connection;
 use App\Entity\Type\Status;
 use App\Manager\StatusManager;
 use App\Repository\Type\StatusRepository;
 
-class DBStatusEntityFindTest extends \Codeception\Test\Unit
+class DBStatusEntityTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \UnitTester
+     * @var \Code
      */
     protected $tester;
+    
+    protected function _before()
+    {
+    }
 
+    protected function _after()
+    {
+    }
 
     /**
      * @group db-status
@@ -52,15 +56,4 @@ class DBStatusEntityFindTest extends \Codeception\Test\Unit
         $this->assertNull($foundEntity);
 
     }
-
-
-
-    protected function _before()
-    {
-    }
-
-    protected function _after()
-    {
-    }
-
 }
