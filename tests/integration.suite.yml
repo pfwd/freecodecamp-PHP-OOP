@@ -1,0 +1,16 @@
+actor: Code
+modules:
+    enabled:
+        - \Helper\Integration
+        - Asserts
+        - Db
+    config:
+        Db:
+            dsn: 'mysql:host=db_test;dbname=test_invoice_app'
+            user: 'root'
+            password: 'test'
+            reconnect: true
+            dump: 'tests/_data/dump.sql'
+            populate: true
+            cleanup: true
+    step_decorators: ~
