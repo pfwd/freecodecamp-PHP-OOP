@@ -1,6 +1,8 @@
 <?php
 
-use App\DB\Connection;
+use App\Entity\Type\Customer;
+use App\Manager\CustomerManager;
+use App\Repository\Type\CustomerRepository;
 
 class DBCustomerEntityCest
 {
@@ -16,13 +18,13 @@ class DBCustomerEntityCest
      */
     public function insertTest(AcceptanceTester $I)
     {
-        $entity = new \App\Entity\Type\Customer();
+        $entity = new Customer();
         $entity->setFirstName('Test First Name')
             ->setLastName('Test Last Name')
-            ->setCompanyName('Test Company Name')
-            ;
+            ->setCompanyName('Test Company Name');
         $connection = new App\DB\Connection();
-        $manager = new \App\Manager\CustomerManager($connection);
+        $repo = new CustomerRepository($connection);
+        $manager = new CustomerManager($repo);
         $manager->save($entity);
 
         $I->seeInDatabase('customer', [
@@ -39,13 +41,13 @@ class DBCustomerEntityCest
      */
     public function updateTest(AcceptanceTester $I)
     {
-        $entity = new \App\Entity\Type\Customer();
+        $entity = new Customer();
         $entity->setFirstName('Test First Name')
             ->setLastName('Test Last Name')
-            ->setCompanyName('Test Company Name')
-        ;
+            ->setCompanyName('Test Company Name');
         $connection = new App\DB\Connection();
-        $manager = new \App\Manager\CustomerManager($connection);
+        $repo = new CustomerRepository($connection);
+        $manager = new CustomerManager($repo);
         $savedEntity = $manager->save($entity);
 
         $I->seeInDatabase('customer', [
