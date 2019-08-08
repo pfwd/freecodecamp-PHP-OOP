@@ -2,11 +2,7 @@
 
 namespace App\Manager;
 
-use App\DB\Connection;
-use App\DB\QueryBuilder;
 use App\Entity\Type\Status;
-use App\Hydration\StatusHydrator;
-use App\Repository\Type\Status as Repository;
 use App\Repository\Type\StatusRepository;
 
 class StatusManager extends AbstractManager
@@ -30,10 +26,18 @@ class StatusManager extends AbstractManager
      *
      * @return null|Status
      */
-    public function findOne(int $id):? Status
+    public function findOne(int $id): ?Status
     {
         $entity = $this->repository->findOne($id);
         return $entity;
+    }
+
+    /**
+     * @return array
+     */
+    public function findAll():array
+    {
+        return $this->repository->findAll();
     }
 
     /**

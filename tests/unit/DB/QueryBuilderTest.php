@@ -179,6 +179,19 @@ class QueryBuilderTest extends \Codeception\Test\Unit
         $this->assertSame($expected, $sql);
     }
 
+    /**
+     * @group entity
+     * @group db
+     * @group db-query-builder
+     * @group db-query-builder-find-all
+     */
+    public function testFindAll()
+    {
+        $sql = QueryBuilder::findAll('status');
+        $expected = "SELECT * FROM `status`";
+        $this->assertSame($expected, $sql);
+    }
+
     protected function _before()
     {
     }

@@ -46,6 +46,27 @@ class StatusRepository extends AbstractRepository
     }
 
     /**
+     * @return array
+     */
+    public function findAll():array
+    {
+        $results = [];
+        $sql = QueryBuilder::findAll('status');
+
+        $dbCon = $this->connection->open();
+        $statement = $dbCon->prepare($sql);
+        $statement->execute();
+        $rows = $statement->fetchAll();
+
+        foreach($rows as $row) {
+            $results[] = StatusHydrator::hydrate($row);
+        }
+
+        return $results;
+
+    }
+
+    /**
      * @param array $options
      * @return mixed
      */
