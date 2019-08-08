@@ -33,6 +33,11 @@ class CustomerManager extends AbstractManager
         return $entity;
     }
 
+    public function findAll():array
+    {
+        return $this->repository->findAll();
+    }
+
     /**
      * @param Customer $entity
      * @return Customer

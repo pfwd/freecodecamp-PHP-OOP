@@ -1,6 +1,7 @@
 <?php
 
 use App\DB\Connection;
+use App\Entity\Type\Customer;
 use App\Entity\Type\Status;
 use App\Manager\StatusManager;
 use App\Repository\Type\StatusRepository;
@@ -79,6 +80,9 @@ class DBStatusEntityTest extends Unit
         $results = $manager->findAll();
         $this->assertIsArray($results);
         $this->assertGreaterThan(1, count($results));
+
+        $foundEntity1 = $results[0];
+        $this->assertInstanceOf(Status::class, $foundEntity1);
 
     }
 

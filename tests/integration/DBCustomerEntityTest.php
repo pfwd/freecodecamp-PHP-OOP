@@ -4,14 +4,25 @@ use App\DB\Connection;
 use App\Entity\Type\Customer;
 use App\Manager\CustomerManager;
 use App\Repository\Type\CustomerRepository;
+use Codeception\Test\Unit;
 
-class DBCustomerEntityTest extends \Codeception\Test\Unit
+class DBCustomerEntityTest extends Unit
 {
     /**
-     * @var \Code
+     * @var Code
      */
     protected $tester;
-    
+
+    /**
+     * @return CustomerManager
+     */
+    protected function getManager(): CustomerManager
+    {
+        $connection = new Connection();
+        $repository = new CustomerRepository($connection);
+        return new CustomerManager($repository);
+    }
+
     protected function _before()
     {
     }
@@ -29,11 +40,8 @@ class DBCustomerEntityTest extends \Codeception\Test\Unit
         $entity = new Customer();
         $entity->setFirstName('Foo')
             ->setLastName('Bar')
-            ->setCompanyName('FooBar')
-        ;
-        $connection = new Connection();
-        $repository = new CustomerRepository($connection);
-        $manager = new CustomerManager($repository);
+            ->setCompanyName('FooBar');
+        $manager = $this->getManager();
         $savedEntity = $manager->save($entity);
 
         $foundEntity = $manager->findOne($savedEntity->getId());
@@ -51,12 +59,40 @@ class DBCustomerEntityTest extends \Codeception\Test\Unit
     {
         $entity = new Customer();
         $entity->setId(5001);
-        $connection = new Connection();
-        $repository = new CustomerRepository($connection);
-        $manager = new CustomerManager($repository);
+        $manager = $this->getManager();
 
         $foundEntity = $manager->findOne($entity->getId());
         $this->assertNull($foundEntity);
 
+    }
+
+    /**
+     * @group db-customer
+     * @group db-customer-entity-find-all
+     */
+    public function testFindAll()
+    {
+        $entity1 = new Customer();
+        $entity1->setFirstName("Peter");
+        $entity1->setLastName("Fisher");
+        $entity1->setCompanyName("How To Code Well");
+
+        $entity2 = new Customer();
+        $entity2->setFirstName("Foo");
+        $entity2->setLastName("Bar");
+        $entity2->setCompanyName("FooBar");
+
+        $manager = $this->getManager();
+
+        $manager->save($entity1);
+        $manager->save($entity2);
+        $results = $manager->findAll();
+
+        $this->assertIsArray($results);
+        $this->assertGreaterThan(1, count($results));
+
+        $foundEntity1 = $results[0];
+
+        $this->assertInstanceOf(Customer::class, $foundEntity1);
     }
 }

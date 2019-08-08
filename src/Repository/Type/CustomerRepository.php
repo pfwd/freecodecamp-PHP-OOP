@@ -61,6 +61,27 @@ class CustomerRepository extends AbstractRepository
     }
 
     /**
+     * @return array
+     */
+    public function findAll():array
+    {
+        $results = [];
+        $sql = QueryBuilder::findAll('customer');
+
+        $dbCon = $this->connection->open();
+        $statement = $dbCon->prepare($sql);
+        $statement->execute();
+        $rows = $statement->fetchAll();
+
+        foreach($rows as $row) {
+            $results[] = CustomerHydrator::hydrate($row);
+        }
+
+        return $results;
+
+    }
+
+    /**
      * @param int $id
      * @return mixed
      */
