@@ -77,4 +77,13 @@ class QueryBuilder
     {
         return "SELECT * FROM `".$table."` WHERE id=:id";
     }
+
+    /**
+     * @param $table
+     * @return string
+     */
+    public static function findAll($table)
+    {
+        return "SELECT * FROM `".$table."`";
+    }
 }
