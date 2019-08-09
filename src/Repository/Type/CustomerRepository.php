@@ -54,7 +54,7 @@ class CustomerRepository extends AbstractRepository
         $statement->execute(array_values($data));
 
         if (null === $entity->getId()) {
-            $entity->setId($dbCon->lastInsertId());
+            $entity->setId((int) $dbCon->lastInsertId());
         }
 
         return $entity;
@@ -73,8 +73,10 @@ class CustomerRepository extends AbstractRepository
         $statement->execute();
         $rows = $statement->fetchAll();
 
-        foreach($rows as $row) {
-            $results[] = CustomerHydrator::hydrate($row);
+        if(is_array($rows)) {
+            foreach($rows as $row) {
+                $results[] = CustomerHydrator::hydrate($row);
+            }
         }
 
         return $results;

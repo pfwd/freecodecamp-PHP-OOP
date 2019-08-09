@@ -1,7 +1,11 @@
 <?php
 
 use App\DB\Connection;
+use App\Entity\Type\Invoice;
+use App\Entity\Type\Status;
+use App\Manager\InvoiceManager;
 use App\Manager\StatusManager;
+use App\Repository\Type\InvoiceRepository;
 use App\Repository\Type\StatusRepository;
 
 class DBInvoiceEntityCest
@@ -18,13 +22,11 @@ class DBInvoiceEntityCest
      */
     public function insertTest(AcceptanceTester $I)
     {
-        $entity = new \App\Entity\Type\Invoice();
+        $entity = new Invoice();
         $entity->setVAT(1)
             ->setTotal(1)
-            ->setReference('Test reference')
-            ;
-        $connection = new App\DB\Connection();
-        $manager = new \App\Manager\InvoiceManager($connection);
+            ->setReference('Test reference');
+        $manager = $this->getManager();
         $manager->save($entity);
 
         $I->seeInDatabase('invoice', [
@@ -42,13 +44,11 @@ class DBInvoiceEntityCest
      */
     public function updateTest(AcceptanceTester $I)
     {
-        $entity = new \App\Entity\Type\Invoice();
+        $entity = new Invoice();
         $entity->setVAT(1)
             ->setTotal(1)
-            ->setReference('Test reference')
-        ;
-        $connection = new App\DB\Connection();
-        $manager = new \App\Manager\InvoiceManager($connection);
+            ->setReference('Test reference');
+        $manager = $this->getManager();
         $savedEntity = $manager->save($entity);
 
         $I->seeInDatabase('invoice', [
@@ -60,8 +60,7 @@ class DBInvoiceEntityCest
 
         $savedEntity->setReference('Test updated reference');
         $savedEntity->setTotal(1)
-            ->setVAT(1)
-            ;
+            ->setVAT(1);
         $manager->save($savedEntity);
 
         $I->seeInDatabase('invoice', [
@@ -80,25 +79,22 @@ class DBInvoiceEntityCest
      */
     public function insertWithStatusTest(AcceptanceTester $I)
     {
-        $status = new \App\Entity\Type\Status();
+        $status = new Status();
         $status->setName('temp')
-            ->setInternalName('TEMP')
-        ;
+            ->setInternalName('TEMP');
 
         $connection = new Connection();
         $repository = new StatusRepository($connection);
         $manager = new StatusManager($repository);
         $savedStatus = $manager->save($status);
 
-        $invoice = new \App\Entity\Type\Invoice();
+        $invoice = new Invoice();
         $invoice->setVAT(1)
             ->setTotal(1)
             ->setStatus($savedStatus)
-            ->setReference('Test reference')
-        ;
+            ->setReference('Test reference');
 
-        $connection = new App\DB\Connection();
-        $manager = new \App\Manager\InvoiceManager($connection);
+        $manager = $this->getManager();;
         $savedInvoice = $manager->save($invoice);
 
         $I->seeInDatabase('invoice', [
@@ -110,5 +106,15 @@ class DBInvoiceEntityCest
         ]);
 
 
+    }
+
+    /**
+     * @return InvoiceManager
+     */
+    protected function getManager():InvoiceManager
+    {
+        $connection = new App\DB\Connection();
+        $repository = new InvoiceRepository($connection);
+        return new InvoiceManager($repository);
     }
 }

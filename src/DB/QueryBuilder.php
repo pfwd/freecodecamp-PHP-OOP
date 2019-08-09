@@ -70,19 +70,19 @@ class QueryBuilder
     }
 
     /**
-     * @param $table
+     * @param string $table
      * @return string
      */
-    public static function findOneBy($table)
+    public static function findOneBy(string $table)
     {
         return "SELECT * FROM `".$table."` WHERE id=:id";
     }
 
     /**
-     * @param $table
+     * @param string $table
      * @return string
      */
-    public static function findAll($table)
+    public static function findAll(string $table)
     {
         return "SELECT * FROM `".$table."`";
     }
