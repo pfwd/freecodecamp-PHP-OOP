@@ -25,7 +25,7 @@ class StatusRepository extends AbstractRepository
 
     /**
      * @param int $id
-     * @return mixed
+     * @return null|Status
      */
     public function findOne(int $id):? Status
     {
@@ -58,8 +58,10 @@ class StatusRepository extends AbstractRepository
         $statement->execute();
         $rows = $statement->fetchAll();
 
-        foreach($rows as $row) {
-            $results[] = StatusHydrator::hydrate($row);
+        if(is_array($rows)) {
+            foreach($rows as $row) {
+                $results[] = StatusHydrator::hydrate($row);
+            }
         }
 
         return $results;
@@ -111,7 +113,7 @@ class StatusRepository extends AbstractRepository
         $statement->execute(array_values($data));
 
         if (null === $entity->getId()) {
-            $entity->setId($dbCon->lastInsertId());
+            $entity->setId((int) $dbCon->lastInsertId());
         }
 
         return $entity;

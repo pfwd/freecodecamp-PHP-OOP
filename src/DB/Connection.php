@@ -39,7 +39,7 @@ class Connection
     {
         $creds = $this->getCreds();
 
-        if(false === self::$conn instanceof PDO) {
+        if(!self::$conn instanceof PDO) {
             $username = $creds['username'];
             $password = $creds['password'];
             $host = $creds['host'];
