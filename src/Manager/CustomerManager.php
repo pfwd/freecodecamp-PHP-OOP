@@ -1,9 +1,8 @@
 <?php
+
 namespace App\Manager;
 
-use App\DB\QueryBuilder;
 use App\Entity\Type\Customer;
-use App\Hydration\CustomerHydrator;
 use App\Repository\Type\CustomerRepository;
 
 class CustomerManager extends AbstractManager
@@ -27,13 +26,16 @@ class CustomerManager extends AbstractManager
      *
      * @return null|Customer
      */
-    public function findOne(int $id):? Customer
+    public function findOne(int $id): ?Customer
     {
         $entity = $this->repository->findOne($id);
         return $entity;
     }
 
-    public function findAll():array
+    /**
+     * @inheritDoc
+     */
+    public function findAll(): array
     {
         return $this->repository->findAll();
     }

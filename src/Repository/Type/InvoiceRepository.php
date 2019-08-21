@@ -41,7 +41,7 @@ class InvoiceRepository extends AbstractRepository
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function findAll(): array
     {
@@ -61,24 +61,6 @@ class InvoiceRepository extends AbstractRepository
 
         return $results;
 
-    }
-
-    /**
-     * @param array $options
-     * @return mixed
-     */
-    public function findOneBy(array $options)
-    {
-        // TODO: Implement findOneBy() method.
-    }
-
-    /**
-     * @param array $options
-     * @return mixed
-     */
-    public function findAllBy(array $options)
-    {
-        // TODO: Implement findAllBy() method.
     }
 
     /**
