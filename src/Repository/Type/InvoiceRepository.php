@@ -6,7 +6,6 @@ use App\DB\Connection;
 use App\DB\QueryBuilder;
 use App\Entity\Type\Invoice;
 use App\Entity\Type\Status;
-use App\Hydration\CustomerHydrator;
 use App\Hydration\InvoiceHydrator;
 use App\Repository\AbstractRepository;
 
@@ -23,7 +22,7 @@ class InvoiceRepository extends AbstractRepository
      * @param int $id
      * @return Invoice|null
      */
-    public function findOne(int $id):?Invoice
+    public function findOne(int $id): ?Invoice
     {
         $entity = null;
         $sql = QueryBuilder::findOneBy('invoice');
@@ -35,10 +34,33 @@ class InvoiceRepository extends AbstractRepository
         ]);
         $row = $statement->fetch();
 
-        if($row) {
+        if ($row) {
             $entity = InvoiceHydrator::hydrate($row);
         }
         return $entity;
+    }
+
+    /**
+     * @return array
+     */
+    public function findAll(): array
+    {
+        $results = [];
+        $sql = QueryBuilder::findAll('invoice');
+
+        $dbCon = $this->connection->open();
+        $statement = $dbCon->prepare($sql);
+        $statement->execute();
+        $rows = $statement->fetchAll();
+
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+                $results[] = InvoiceHydrator::hydrate($row);
+            }
+        }
+
+        return $results;
+
     }
 
     /**
@@ -63,7 +85,7 @@ class InvoiceRepository extends AbstractRepository
      * @param Invoice $entity
      * @return Invoice
      */
-    public function save(Invoice $entity):Invoice
+    public function save(Invoice $entity): Invoice
     {
 
         $data = [
@@ -71,11 +93,11 @@ class InvoiceRepository extends AbstractRepository
             'total' => $entity->getTotal(),
             'vat' => $entity->getVat()
         ];
-        if ($entity->getStatus() instanceof Status){
+        if ($entity->getStatus() instanceof Status) {
             $data['status_id'] = $entity->getStatus()->getId();
         }
         $where = [];
-        if(null !== $entity->getId()) {
+        if (null !== $entity->getId()) {
             $where['id'] = $entity->getId();
         }
 
@@ -91,7 +113,7 @@ class InvoiceRepository extends AbstractRepository
         $statement = $dbCon->prepare($sql);
         $statement->execute(array_values($data));
 
-        if(null === $entity->getId()){
+        if (null === $entity->getId()) {
             $entity->setId($dbCon->lastInsertId());
         }
 

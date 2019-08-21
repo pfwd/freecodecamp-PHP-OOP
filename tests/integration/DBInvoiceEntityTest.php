@@ -58,6 +58,35 @@ class DBInvoiceEntityTest extends Unit
 
     }
 
+    /**
+     * @group db-invoice
+     * @group db-invoice-entity-find-all
+     */
+    public function testFindAll()
+    {
+        $entity1 = new Invoice();
+        $entity1->setVAT(3)
+            ->setTotal(3)
+            ->setReference('Test 1');
+
+        $entity2 = new Invoice();
+        $entity2->setVAT(4)
+            ->setTotal(4)
+            ->setReference('Test 2');
+
+        $manager = $this->getManager();
+
+        $manager->save($entity1);
+        $manager->save($entity2);
+        $results = $manager->findAll();
+
+        $this->assertIsArray($results);
+        $this->assertGreaterThan(1, count($results));
+
+        $foundEntity1 = $results[0];
+
+        $this->assertInstanceOf(Invoice::class, $foundEntity1);
+    }
 
     protected function _before()
     {
