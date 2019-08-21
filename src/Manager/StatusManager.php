@@ -33,9 +33,9 @@ class StatusManager extends AbstractManager
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function findAll():array
+    public function findAll(): array
     {
         return $this->repository->findAll();
     }

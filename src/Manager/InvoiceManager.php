@@ -1,10 +1,8 @@
 <?php
+
 namespace App\Manager;
 
-use App\DB\QueryBuilder;
 use App\Entity\Type\Invoice;
-use App\Entity\Type\Status;
-use App\Hydration\StatusHydrator;
 use App\Repository\Type\InvoiceRepository;
 
 class InvoiceManager extends AbstractManager
@@ -29,16 +27,16 @@ class InvoiceManager extends AbstractManager
      *
      * @return Invoice|null
      */
-    public function findOne(int $id):? Invoice
+    public function findOne(int $id): ?Invoice
     {
         $entity = $this->repository->findOne($id);
         return $entity;
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function findAll():array
+    public function findAll(): array
     {
         return $this->repository->findAll();
     }
@@ -47,7 +45,7 @@ class InvoiceManager extends AbstractManager
      * @param Invoice $entity
      * @return Invoice
      */
-    public function save(Invoice $entity):Invoice
+    public function save(Invoice $entity): Invoice
     {
         $savedEntity = $this->repository->save($entity);
         return $savedEntity;

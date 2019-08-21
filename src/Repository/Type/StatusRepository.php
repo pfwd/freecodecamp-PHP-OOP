@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository\Type;
 
 use App\DB\Connection;
@@ -27,7 +28,7 @@ class StatusRepository extends AbstractRepository
      * @param int $id
      * @return null|Status
      */
-    public function findOne(int $id):? Status
+    public function findOne(int $id): ?Status
     {
         $entity = null;
         $sql = QueryBuilder::findOneBy('status');
@@ -39,16 +40,16 @@ class StatusRepository extends AbstractRepository
         ]);
         $row = $statement->fetch();
 
-        if($row) {
+        if ($row) {
             $entity = StatusHydrator::hydrate($row);
         }
         return $entity;
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
-    public function findAll():array
+    public function findAll(): array
     {
         $results = [];
         $sql = QueryBuilder::findAll('status');
@@ -58,8 +59,8 @@ class StatusRepository extends AbstractRepository
         $statement->execute();
         $rows = $statement->fetchAll();
 
-        if(is_array($rows)) {
-            foreach($rows as $row) {
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
                 $results[] = StatusHydrator::hydrate($row);
             }
         }
@@ -69,29 +70,11 @@ class StatusRepository extends AbstractRepository
     }
 
     /**
-     * @param array $options
-     * @return mixed
-     */
-    public function findOneBy(array $options)
-    {
-        // TODO: Implement findOneBy() method.
-    }
-
-    /**
-     * @param array $options
-     * @return mixed
-     */
-    public function findAllBy(array $options)
-    {
-        // TODO: Implement findAllBy() method.
-    }
-
-    /**
      * @param Status $entity
      * @return Status
      */
-    public function save(Status $entity) {
-
+    public function save(Status $entity)
+    {
         $data = [
             'name' => $entity->getName(),
             'internal_name' => $entity->getInternalName(),
@@ -113,7 +96,7 @@ class StatusRepository extends AbstractRepository
         $statement->execute(array_values($data));
 
         if (null === $entity->getId()) {
-            $entity->setId((int) $dbCon->lastInsertId());
+            $entity->setId((int)$dbCon->lastInsertId());
         }
 
         return $entity;

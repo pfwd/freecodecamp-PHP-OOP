@@ -1,9 +1,20 @@
 <?php
+
 namespace App\Repository;
 
 abstract class AbstractRepository
 {
+    /**
+     * Find one entity by ID
+     *
+     * @param int $id
+     * @return mixed
+     */
     abstract public function findOne(int $id);
-    abstract public function findOneBy(array $options);
-    abstract public function findAllBy(array $options);
+
+    /**
+     * Find all entities
+     * @return array
+     */
+    abstract public function findAll():array;
 }
