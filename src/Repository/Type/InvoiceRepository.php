@@ -6,6 +6,8 @@ use App\DB\Connection;
 use App\DB\QueryBuilder;
 use App\Entity\Type\Invoice;
 use App\Entity\Type\Status;
+use App\Hydration\CustomerHydrator;
+use App\Hydration\InvoiceHydrator;
 use App\Repository\AbstractRepository;
 
 class InvoiceRepository extends AbstractRepository
@@ -19,11 +21,24 @@ class InvoiceRepository extends AbstractRepository
 
     /**
      * @param int $id
-     * @return mixed
+     * @return Invoice|null
      */
-    public function findOne(int $id)
+    public function findOne(int $id):?Invoice
     {
+        $entity = null;
+        $sql = QueryBuilder::findOneBy('invoice');
+        $dbCon = $this->connection->open();
 
+        $statement = $dbCon->prepare($sql);
+        $statement->execute([
+            'id' => $id
+        ]);
+        $row = $statement->fetch();
+
+        if($row) {
+            $entity = InvoiceHydrator::hydrate($row);
+        }
+        return $entity;
     }
 
     /**
