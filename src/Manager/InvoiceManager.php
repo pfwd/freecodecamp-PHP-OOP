@@ -27,12 +27,12 @@ class InvoiceManager extends AbstractManager
     /**
      * @param int $id
      *
-     * @return Status
+     * @return Invoice|null
      */
-    public function findOne(int $id): Status
+    public function findOne(int $id):? Invoice
     {
-        $row = $this->repository->findOne($id);
-        return StatusHydrator::hydrate($row);
+        $entity = $this->repository->findOne($id);
+        return $entity;
     }
 
     /**
