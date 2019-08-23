@@ -31,6 +31,11 @@ class InvoiceItem extends AbstractEntity implements GenericEntityInterface
     private $total = 0.0;
 
     /**
+     * @var Invoice
+     */
+    private $invoice;
+
+    /**
      * @return string
      */
     public function getReference(): string
@@ -119,6 +124,24 @@ class InvoiceItem extends AbstractEntity implements GenericEntityInterface
     public function setTotal(float $total): InvoiceItem
     {
         $this->total = $total;
+        return $this;
+    }
+
+    /**
+     * @return Invoice
+     */
+    public function getInvoice(): Invoice
+    {
+        return $this->invoice;
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @return InvoiceItem
+     */
+    public function setInvoice(Invoice $invoice): InvoiceItem
+    {
+        $this->invoice = $invoice;
         return $this;
     }
 
