@@ -69,15 +69,21 @@ class InvoiceItemRepository extends AbstractRepository
 
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function findAllByInvoiceID(int $id):array
     {
         $results = [];
-        $sql = QueryBuilder::findAllBy('invoice_item');
+        $sql = QueryBuilder::findAllBy('invoice_item', [
+            'invoice_id' => 'id'
+        ]);
 
         $dbCon = $this->connection->open();
         $statement = $dbCon->prepare($sql);
         $statement->execute([
-            'invoice_id' => $id
+            'id' => $id
         ]);
         $statement->execute();
         $rows = $statement->fetchAll();
@@ -87,7 +93,7 @@ class InvoiceItemRepository extends AbstractRepository
                 $results[] = InvoiceItemHydrator::hydrate($row);
             }
         }
-
+        return $results;
     }
 
     /**
