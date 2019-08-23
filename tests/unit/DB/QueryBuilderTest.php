@@ -192,6 +192,22 @@ class QueryBuilderTest extends \Codeception\Test\Unit
         $this->assertSame($expected, $sql);
     }
 
+    /**
+     * @group entity
+     * @group db
+     * @group db-query-builder
+     * @group db-query-builder-find-all-by
+     */
+    public function testFindAllBy()
+    {
+        $sql = QueryBuilder::findAllBy('status', [
+            'name'  => 'name',
+            'internal_name' => 'internal_name'
+        ]);
+        $expected = "SELECT * FROM `status` WHERE `name` =:name AND `internal_name` =:internal_name";
+        $this->assertSame($expected, $sql);
+    }
+
     protected function _before()
     {
     }
