@@ -73,7 +73,7 @@ class StatusRepository extends AbstractRepository
      * @param Status $entity
      * @return Status
      */
-    public function save(Status $entity)
+    public function saveBKP(Status $entity)
     {
         $data = [
             'name' => $entity->getName(),
@@ -94,6 +94,49 @@ class StatusRepository extends AbstractRepository
 
         $statement = $dbCon->prepare($sql);
         $statement->execute(array_values($data));
+
+        if (null === $entity->getId()) {
+            $entity->setId((int)$dbCon->lastInsertId());
+        }
+
+        return $entity;
+    }
+
+
+    /**
+     * @param Status $entity
+     * @return Status
+     */
+    public function save(Status $entity)
+    {
+        $values = [
+            'name' => $entity->getName(),
+            'internal_name' => $entity->getInternalName(),
+
+        ];
+        if (null !== $entity->getId()) {
+            $values['id'] = $entity->getId();
+        }
+
+        $data = [
+            'name' => 'name',
+            'internal_name' => 'internal_name'
+        ];
+        $table = 'status';
+        $where = [];
+        if (null !== $entity->getId()) {
+            $where['id'] = 'id';
+        }
+        $sql = QueryBuilder::insertOrUpdate($data, $table, $where);
+
+        if (null !== $entity->getId()) {
+            $data['id'] = $entity->getId();
+        }
+
+        $dbCon = $this->connection->open();
+
+        $statement = $dbCon->prepare($sql);
+        $statement->execute($values);
 
         if (null === $entity->getId()) {
             $entity->setId((int)$dbCon->lastInsertId());

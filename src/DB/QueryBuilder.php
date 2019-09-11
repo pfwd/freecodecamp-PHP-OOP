@@ -11,21 +11,7 @@ class QueryBuilder
      */
     public static function insert(array $data, string $table): string
     {
-        $sql = 'INSERT INTO `'.$table.'`';
-
-        $values = 'VALUE (';
-        for ($i = 0; $i < count($data); $i++) {
-            if ($i > 0) {
-                $values .= ",";
-            }
-            $values .= "?";
-        }
-        $values .= ')';
-
-        $fields = implode('`, `', array_keys($data));
-
-        $sql .= " (`" . $fields . "`)" . " " . $values . ";";
-
+        $sql = 'INSERT INTO `'.$table.'` (' . self::fields($data) . ') VALUE (' . self::insertedPlaceHolders($data).');';
         return $sql;
     }
 
@@ -37,18 +23,67 @@ class QueryBuilder
      */
     public static function update(array $data, string $table, array $where): string
     {
-        $whereSQL = '';
+        $sql = 'UPDATE `'.$table.'` SET ' . self::updatePlaceholders($data) . "WHERE " . self::where($where).";";
 
-        foreach($where as $key => $value) {
-            $whereSQL.='`'.$key.'` =?';
+        return $sql;
+    }
+
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public static function insertedPlaceHolders(array $data = []):string
+    {
+        $placeholders = array_keys($data);
+        $sql = '';
+        for ($i = 0; $i < count($placeholders); $i++) {
+            if ($i > 0) {
+                $sql .= ", ";
+            }
+            $sql .= ':'.$placeholders[$i];
         }
 
-        $sql = 'UPDATE `'.$table.'` SET ';
+        return $sql;
+    }
 
-        $fields = implode('` =?, `', array_keys($data));
+    /**
+     * @param array $data
+     * @return string
+     */
+    public static function fields(array $data = []):string
+    {
+        $placeholders = array_keys($data);
+        $sql = '';
+        for ($i = 0; $i < count($placeholders); $i++) {
+            if ($i > 0) {
+                $sql .= ", ";
+            }
+            $sql .= "`".$placeholders[$i]."`";
+        }
 
-        $sql.= "`".$fields."` =?" . " WHERE " . $whereSQL .";";
+        return $sql;
+    }
 
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public static function updatePlaceholders(array $data = []):string
+    {
+        $sql = '';
+        $counter = 0;
+        $total = count($data);
+        foreach($data as $field => $value) {
+            $counter ++;
+            $sql.='`'.$field.'` =:'.$field;
+            if($counter < $total) {
+                $sql.= ', ';
+            } else{
+                $sql.= ' ';
+            }
+        }
         return $sql;
     }
 
@@ -98,7 +133,7 @@ class QueryBuilder
         $num = 0;
         foreach($conditions as $field => $value) {
             $num ++;
-            $sql.='`'.$field.'` =:'.$value;
+            $sql.='`'.$field.'` =:'.$field;
             if($num < $total) {
                 $sql.=' AND ';
             }

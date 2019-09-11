@@ -181,6 +181,7 @@ class DBInvoiceItemEntityTest extends Unit
         $manager->save($entity1);
         $manager->save($entity2);
 
+
         $results = $manager->findAllByInvoiceID($foundInvoice->getId());
         $this->assertIsArray($results);
         $this->assertGreaterThan(1, count($results));
