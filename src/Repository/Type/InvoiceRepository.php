@@ -69,7 +69,6 @@ class InvoiceRepository extends AbstractRepository
      */
     public function save(Invoice $entity): Invoice
     {
-
         $data = [
             'reference' => $entity->getReference(),
             'total' => $entity->getTotal(),
@@ -93,7 +92,7 @@ class InvoiceRepository extends AbstractRepository
         $dbCon = $this->connection->open();
 
         $statement = $dbCon->prepare($sql);
-        $statement->execute(array_values($data));
+        $statement->execute($data);
 
         if (null === $entity->getId()) {
             $entity->setId($dbCon->lastInsertId());

@@ -76,16 +76,14 @@ class InvoiceItemRepository extends AbstractRepository
     public function findAllByInvoiceID(int $id):array
     {
         $results = [];
-        $sql = QueryBuilder::findAllBy('invoice_item', [
-            'invoice_id' => 'id'
-        ]);
+        $data = [
+            'invoice_id' => $id
+        ];
+        $sql = QueryBuilder::findAllBy('invoice_item', $data);
 
         $dbCon = $this->connection->open();
         $statement = $dbCon->prepare($sql);
-        $statement->execute([
-            'id' => $id
-        ]);
-        $statement->execute();
+        $statement->execute($data);
         $rows = $statement->fetchAll();
 
         if (is_array($rows)) {
@@ -125,7 +123,7 @@ class InvoiceItemRepository extends AbstractRepository
         $dbCon = $this->connection->open();
 
         $statement = $dbCon->prepare($sql);
-        $statement->execute(array_values($data));
+        $statement->execute($data);
 
         if (null === $entity->getId()) {
             $entity->setId((int)$dbCon->lastInsertId());

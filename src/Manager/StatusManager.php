@@ -51,4 +51,14 @@ class StatusManager extends AbstractManager
         return $savedEntity;
     }
 
+    /**
+     * @param Status $entity
+     * @return Status
+     */
+    public function update(Status $entity)
+    {
+        $savedEntity = $this->repository->update($entity);
+
+        return $savedEntity;
+    }
 }

@@ -49,7 +49,7 @@ class CustomerRepository extends AbstractRepository
         $dbCon = $this->connection->open();
 
         $statement = $dbCon->prepare($sql);
-        $statement->execute(array_values($data));
+        $statement->execute($data);
 
         if (null === $entity->getId()) {
             $entity->setId((int)$dbCon->lastInsertId());

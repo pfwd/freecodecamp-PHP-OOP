@@ -31,7 +31,7 @@ class QueryBuilderTest extends \Codeception\Test\Unit
         ];
         $table = 'invoice';
         $sql = QueryBuilder::insert($data, $table);
-        $expected = "INSERT INTO `invoice` (`reference`, `total`, `vat`, `status_id`, `id`) VALUE (?,?,?,?,?);";
+        $expected = "INSERT INTO `invoice` (`reference`, `total`, `vat`, `status_id`, `id`) VALUE (:reference, :total, :vat, :status_id, :id);";
 
         $this->assertSame($expected, $sql);
     }
@@ -51,7 +51,7 @@ class QueryBuilderTest extends \Codeception\Test\Unit
         ];
         $table = 'customer';
         $sql = QueryBuilder::insert($data, $table);
-        $expected = "INSERT INTO `customer` (`first_name`, `last_name`, `company_name`) VALUE (?,?,?);";
+        $expected = "INSERT INTO `customer` (`first_name`, `last_name`, `company_name`) VALUE (:first_name, :last_name, :company_name);";
 
         $this->assertSame($expected, $sql);
     }
@@ -64,19 +64,19 @@ class QueryBuilderTest extends \Codeception\Test\Unit
     public function testUpdate()
     {
         $data = [
-            'reference' => 'foo',
-            'total' => 1,
-            'vat' => 1,
+            'reference' => 'reference',
+            'total' => 'total',
+            'vat' => 'vat',
         ];
 
         $where = [
-            'id' => 5
+            'id' => 'id'
         ];
 
         $table = 'invoice';
 
         $sql = QueryBuilder::update($data, $table, $where);
-        $expected = "UPDATE `invoice` SET `reference` =?, `total` =?, `vat` =? WHERE `id` =?;";
+        $expected = "UPDATE `invoice` SET `reference` =:reference, `total` =:total, `vat` =:vat WHERE `id` =:id;";
 
         $this->assertSame($expected, $sql);
     }
@@ -97,7 +97,7 @@ class QueryBuilderTest extends \Codeception\Test\Unit
         $table = 'customer';
 
         $sql = QueryBuilder::insertOrUpdate($data, $table);
-        $expected = "INSERT INTO `customer` (`first_name`, `last_name`, `company_name`) VALUE (?,?,?);";
+        $expected = "INSERT INTO `customer` (`first_name`, `last_name`, `company_name`) VALUE (:first_name, :last_name, :company_name);";
 
         $this->assertSame($expected, $sql);
     }
@@ -111,20 +111,20 @@ class QueryBuilderTest extends \Codeception\Test\Unit
     public function testInsertOrUpdateWithWhereClause()
     {
         $data = [
-            'reference' => 'foo',
-            'total' => 1,
-            'vat' => 1,
+            'reference' => 'reference',
+            'total' => 'total',
+            'vat' => 'vat',
         ];
 
         $where = [
-            'id' => 5
+            'id' => 'id'
         ];
 
         $table = 'invoice';
 
         $sql = QueryBuilder::insertOrUpdate($data, $table, $where);
 
-        $expected = "UPDATE `invoice` SET `reference` =?, `total` =?, `vat` =? WHERE `id` =?;";
+        $expected = "UPDATE `invoice` SET `reference` =:reference, `total` =:total, `vat` =:vat WHERE `id` =:id;";
 
         $this->assertSame($expected, $sql);
     }
@@ -161,7 +161,7 @@ class QueryBuilderTest extends \Codeception\Test\Unit
 
         $sql = QueryBuilder::insertOrUpdate($data, $table);
 
-        $expected = "INSERT INTO `invoice` (`reference`, `total`, `vat`, `status_id`) VALUE (?,?,?,?);";
+        $expected = "INSERT INTO `invoice` (`reference`, `total`, `vat`, `status_id`) VALUE (:reference, :total, :vat, :status_id);";
 
         $this->assertSame($expected, $sql);
     }
