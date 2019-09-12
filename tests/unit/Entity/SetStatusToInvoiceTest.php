@@ -1,8 +1,8 @@
 <?php
 namespace Entity;
 
-use App\Entity\Type\Invoice;
-use App\Entity\Type\Status;
+use App\Entity\Invoice;
+use App\Entity\Status;
 
 class SetStatusToInvoiceTest extends \Codeception\Test\Unit
 {

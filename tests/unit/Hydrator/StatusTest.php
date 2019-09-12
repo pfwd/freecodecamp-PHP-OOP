@@ -1,6 +1,6 @@
 <?php namespace Hydrator;
 
-use App\Entity\Type\Status;
+use App\Entity\Status;
 use App\Hydration\StatusHydrator;
 use DateTime;
 

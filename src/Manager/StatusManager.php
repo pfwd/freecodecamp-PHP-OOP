@@ -2,8 +2,8 @@
 
 namespace App\Manager;
 
-use App\Entity\Type\Status;
-use App\Repository\Type\StatusRepository;
+use App\Entity\Status;
+use App\Repository\StatusRepository;
 
 class StatusManager extends AbstractManager
 {

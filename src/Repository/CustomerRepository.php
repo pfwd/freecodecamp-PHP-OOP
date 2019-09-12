@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repository\Type;
+namespace App\Repository;
 
 use App\DB\Connection;
 use App\DB\QueryBuilder;
-use App\Entity\Type\Customer;
+use App\Entity\Customer;
 use App\Hydration\CustomerHydrator;
-use App\Repository\AbstractRepository;
 
 class CustomerRepository extends AbstractRepository
 {

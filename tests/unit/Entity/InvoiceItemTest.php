@@ -1,7 +1,7 @@
 <?php
 namespace Entity;
 
-use App\Entity\Type\InvoiceItem;
+use App\Entity\InvoiceItem;
 
 class InvoiceItemTest extends \Codeception\Test\Unit
 {

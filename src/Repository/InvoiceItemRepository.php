@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repository\Type;
+namespace App\Repository;
 
 use App\DB\Connection;
 use App\DB\QueryBuilder;
-use App\Entity\Type\InvoiceItem;
+use App\Entity\InvoiceItem;
 use App\Hydration\InvoiceItemHydrator;
-use App\Repository\AbstractRepository;
 
 class InvoiceItemRepository extends AbstractRepository
 {

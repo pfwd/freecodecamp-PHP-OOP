@@ -1,7 +1,7 @@
 <?php
 namespace Helper\HTTP\Validation;
 
-use App\Controller\Type\Home;
+use App\Controller\Home;
 use App\Helper\HTTP\Route\Route;
 use App\Helper\HTTP\Validation\Type\ActionValidator;
 

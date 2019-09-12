@@ -1,12 +1,12 @@
 <?php
 
 use App\DB\Connection;
-use App\Entity\Type\Invoice;
-use App\Entity\Type\Status;
+use App\Entity\Invoice;
+use App\Entity\Status;
 use App\Manager\InvoiceManager;
 use App\Manager\StatusManager;
-use App\Repository\Type\InvoiceRepository;
-use App\Repository\Type\StatusRepository;
+use App\Repository\InvoiceRepository;
+use App\Repository\StatusRepository;
 
 class DBInvoiceEntityCest
 {

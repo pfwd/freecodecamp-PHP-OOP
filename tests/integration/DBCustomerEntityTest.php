@@ -1,9 +1,9 @@
 <?php
 
 use App\DB\Connection;
-use App\Entity\Type\Customer;
+use App\Entity\Customer;
 use App\Manager\CustomerManager;
-use App\Repository\Type\CustomerRepository;
+use App\Repository\CustomerRepository;
 use Codeception\Test\Unit;
 
 class DBCustomerEntityTest extends Unit

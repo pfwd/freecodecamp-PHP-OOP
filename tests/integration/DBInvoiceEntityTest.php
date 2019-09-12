@@ -1,9 +1,9 @@
 <?php
 
 use App\DB\Connection;
-use App\Entity\Type\Invoice;
+use App\Entity\Invoice;
 use App\Manager\InvoiceManager;
-use App\Repository\Type\InvoiceRepository;
+use App\Repository\InvoiceRepository;
 use Codeception\Test\Unit;
 
 class DBInvoiceEntityTest extends Unit

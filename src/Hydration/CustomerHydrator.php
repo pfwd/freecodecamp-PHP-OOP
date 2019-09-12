@@ -2,7 +2,7 @@
 
 namespace App\Hydration;
 
-use App\Entity\Type\Customer;
+use App\Entity\Customer;
 
 class CustomerHydrator extends AbstractHydrator
 {

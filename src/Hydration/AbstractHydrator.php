@@ -2,7 +2,7 @@
 
 namespace App\Hydration;
 
-use App\Entity\Type\GenericEntityInterface;
+use App\Entity\GenericEntityInterface;
 use DateTime;
 
 abstract class AbstractHydrator

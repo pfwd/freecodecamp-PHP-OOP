@@ -2,8 +2,8 @@
 
 namespace App\Manager;
 
-use App\Entity\Type\InvoiceItem;
-use App\Repository\Type\InvoiceItemRepository;
+use App\Entity\InvoiceItem;
+use App\Repository\InvoiceItemRepository;
 
 class InvoiceItemManager extends AbstractManager
 {

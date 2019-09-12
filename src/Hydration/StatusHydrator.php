@@ -2,7 +2,7 @@
 
 namespace App\Hydration;
 
-use App\Entity\Type\Status;
+use App\Entity\Status;
 
 class StatusHydrator extends AbstractHydrator
 {
