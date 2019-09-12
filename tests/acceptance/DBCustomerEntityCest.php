@@ -1,8 +1,8 @@
 <?php
 
-use App\Entity\Type\Customer;
+use App\Entity\Customer;
 use App\Manager\CustomerManager;
-use App\Repository\Type\CustomerRepository;
+use App\Repository\CustomerRepository;
 
 class DBCustomerEntityCest
 {

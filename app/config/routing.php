@@ -1,23 +1,23 @@
 <?php
 
-use App\Controller\Type;
+use App\Controller;
 
 return [
     [
         'pattern' => '/',
-        'controller' => Type\Home::class,
+        'controller' => Controller\Home::class,
         'method' => ['GET'],
         'action' => 'index'
     ],
     [
         'pattern' => '/invoice',
-        'controller' => Type\Invoice::class,
+        'controller' => Controller\Invoice::class,
         'method' => ['GET'],
         'action' => 'dashboard'
     ],
     [
         'pattern' => '/invoice/{id}',
-        'controller' => Type\Invoice::class,
+        'controller' => Controller\Invoice::class,
         'method' => ['GET'],
         'action' => 'index',
         'parameters' => [
@@ -26,7 +26,7 @@ return [
     ],
     [
         'pattern' => '/invoice/{id}/edit',
-        'controller' => Type\Invoice::class,
+        'controller' => Controller\Invoice::class,
         'method' => ['GET'],
         'action' => 'edit',
         'parameters' => [

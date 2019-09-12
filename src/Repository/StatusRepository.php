@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repository\Type;
+namespace App\Repository;
 
 use App\DB\Connection;
 use App\DB\QueryBuilder;
-use App\Entity\Type\Status;
+use App\Entity\Status;
 use App\Hydration\StatusHydrator;
-use App\Repository\AbstractRepository;
 
 class StatusRepository extends AbstractRepository
 {

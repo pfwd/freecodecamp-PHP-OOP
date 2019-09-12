@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Repository\Type;
+namespace App\Repository;
 
 use App\DB\Connection;
 use App\DB\QueryBuilder;
-use App\Entity\Type\Invoice;
-use App\Entity\Type\Status;
+use App\Entity\Invoice;
+use App\Entity\Status;
 use App\Hydration\InvoiceHydrator;
-use App\Repository\AbstractRepository;
 
 class InvoiceRepository extends AbstractRepository
 {

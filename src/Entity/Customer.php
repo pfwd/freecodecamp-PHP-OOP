@@ -1,7 +1,6 @@
 <?php
-namespace App\Entity\Type;
+namespace App\Entity;
 
-use App\Entity\AbstractEntity;
 
 class Customer extends AbstractEntity implements GenericEntityInterface
 {

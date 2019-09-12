@@ -1,7 +1,5 @@
 <?php
-namespace App\Entity\Type;
-
-use App\Entity\AbstractEntity;
+namespace App\Entity;
 
 class Invoice extends AbstractEntity implements GenericEntityInterface
 {

@@ -1,7 +1,7 @@
 <?php
 namespace Entity;
 
-use App\Entity\Type\Customer;
+use App\Entity\Customer;
 
 class CustomerTest extends \Codeception\Test\Unit
 {

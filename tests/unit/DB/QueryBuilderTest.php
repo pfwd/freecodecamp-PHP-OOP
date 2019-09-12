@@ -4,8 +4,8 @@ namespace Entity;
 
 
 use App\DB\QueryBuilder;
-use App\Entity\Type\Invoice;
-use App\Entity\Type\Status;
+use App\Entity\Invoice;
+use App\Entity\Status;
 
 class QueryBuilderTest extends \Codeception\Test\Unit
 {

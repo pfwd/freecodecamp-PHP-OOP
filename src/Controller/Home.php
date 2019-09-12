@@ -1,7 +1,6 @@
 <?php
-namespace App\Controller\Type;
+namespace App\Controller;
 
-use App\Controller\AbstractController;
 use App\Helper\HTTP\Request\Request;
 use App\Helper\HTTP\Response\View;
 

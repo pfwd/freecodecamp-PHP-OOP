@@ -1,13 +1,12 @@
 <?php
 
 use App\DB\Connection;
-use App\Entity\Type\Invoice;
-use App\Entity\Type\InvoiceItem;
-use App\Entity\Type\Status;
+use App\Entity\Invoice;
+use App\Entity\InvoiceItem;
 use App\Manager\InvoiceItemManager;
 use App\Manager\InvoiceManager;
-use App\Repository\Type\InvoiceItemRepository;
-use App\Repository\Type\InvoiceRepository;
+use App\Repository\InvoiceItemRepository;
+use App\Repository\InvoiceRepository;
 use Codeception\Test\Unit;
 
 class DBInvoiceItemEntityTest extends Unit

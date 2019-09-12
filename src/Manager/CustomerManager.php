@@ -2,8 +2,8 @@
 
 namespace App\Manager;
 
-use App\Entity\Type\Customer;
-use App\Repository\Type\CustomerRepository;
+use App\Entity\Customer;
+use App\Repository\CustomerRepository;
 
 class CustomerManager extends AbstractManager
 {

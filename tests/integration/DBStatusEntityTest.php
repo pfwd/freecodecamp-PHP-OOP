@@ -1,10 +1,9 @@
 <?php
 
 use App\DB\Connection;
-use App\Entity\Type\Customer;
-use App\Entity\Type\Status;
+use App\Entity\Status;
 use App\Manager\StatusManager;
-use App\Repository\Type\StatusRepository;
+use App\Repository\StatusRepository;
 use Codeception\Test\Unit;
 
 class DBStatusEntityTest extends Unit

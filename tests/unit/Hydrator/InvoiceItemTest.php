@@ -1,6 +1,6 @@
 <?php namespace Hydrator;
 
-use App\Entity\Type\InvoiceItem;
+use App\Entity \InvoiceItem;
 use App\Hydration\InvoiceItemHydrator;
 use DateTime;
 

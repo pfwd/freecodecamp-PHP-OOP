@@ -1,8 +1,9 @@
 <?php
 
 use App\DB\Connection;
+use App\Entity\Status;
 use App\Manager\StatusManager;
-use App\Repository\Type\StatusRepository;
+use App\Repository\StatusRepository;
 
 class DBStatusEntityCest
 {
@@ -18,10 +19,9 @@ class DBStatusEntityCest
      */
     public function insertTest(AcceptanceTester $I)
     {
-        $entity = new \App\Entity\Type\Status();
+        $entity = new Status();
         $entity->setName('Hello World2')
-            ->setInternalName('HELLO_WORLD_2')
-            ;
+            ->setInternalName('HELLO_WORLD_2');
         $connection = new Connection();
         $repository = new StatusRepository($connection);
         $manager = new StatusManager($repository);
@@ -41,10 +41,9 @@ class DBStatusEntityCest
      */
     public function updateTest(AcceptanceTester $I)
     {
-        $entity = new \App\Entity\Type\Status();
+        $entity = new Status();
         $entity->setName('Test Status')
-            ->setInternalName('TEST_STATUS')
-        ;
+            ->setInternalName('TEST_STATUS');
         $connection = new Connection();
         $repository = new StatusRepository($connection);
         $manager = new StatusManager($repository);

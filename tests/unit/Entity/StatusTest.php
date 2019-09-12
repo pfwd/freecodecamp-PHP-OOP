@@ -1,7 +1,7 @@
 <?php
 namespace Entity;
 
-use App\Entity\Type\Status;
+use App\Entity\Status;
 
 class StatusTest extends \Codeception\Test\Unit
 {

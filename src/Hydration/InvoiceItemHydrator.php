@@ -2,7 +2,7 @@
 
 namespace App\Hydration;
 
-use App\Entity\Type\InvoiceItem;
+use App\Entity\InvoiceItem;
 
 class InvoiceItemHydrator extends AbstractHydrator
 {

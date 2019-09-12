@@ -1,8 +1,8 @@
 <?php
 namespace Entity;
 
-use App\Entity\Type\Invoice;
-use App\Entity\Type\InvoiceItem;
+use App\Entity\Invoice;
+use App\Entity\InvoiceItem;
 
 class AddInvoiceItemToInvoiceTest extends \Codeception\Test\Unit
 {
