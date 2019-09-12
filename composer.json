@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
