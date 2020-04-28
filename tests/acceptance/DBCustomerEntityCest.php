@@ -1,5 +1,8 @@
 <?php
 
+use App\DB\Builder\Builder;
+use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Customer;
 use App\Manager\CustomerManager;
 use App\Repository\CustomerRepository;
@@ -10,6 +13,16 @@ class DBCustomerEntityCest
     {
     }
 
+    /**
+     * @return CustomerManager
+     */
+    public function getManager():CustomerManager
+    {
+        $connection = new App\DB\Connection();
+        $queryBuilder = new QueryBuilder(new Builder());
+        $repo = new CustomerRepository($connection, $queryBuilder);
+        return new CustomerManager($repo);
+    }
 
     /**
      * @param AcceptanceTester $I
@@ -22,10 +35,8 @@ class DBCustomerEntityCest
         $entity->setFirstName('Test First Name')
             ->setLastName('Test Last Name')
             ->setCompanyName('Test Company Name');
-        $connection = new App\DB\Connection();
-        $repo = new CustomerRepository($connection);
-        $manager = new CustomerManager($repo);
-        $manager->save($entity);
+
+        $this->getManager()->save($entity);
 
         $I->seeInDatabase('customer', [
             'first_name' => $entity->getFirstName(),
@@ -45,10 +56,7 @@ class DBCustomerEntityCest
         $entity->setFirstName('Test First Name')
             ->setLastName('Test Last Name')
             ->setCompanyName('Test Company Name');
-        $connection = new App\DB\Connection();
-        $repo = new CustomerRepository($connection);
-        $manager = new CustomerManager($repo);
-        $savedEntity = $manager->save($entity);
+        $savedEntity = $this->getManager()->save($entity);
 
         $I->seeInDatabase('customer', [
             'first_name' => $entity->getFirstName(),
@@ -58,7 +66,7 @@ class DBCustomerEntityCest
         ]);
 
         $savedEntity->setCompanyName('Test Company Name 2');
-        $savedEntity = $manager->save($savedEntity);
+        $savedEntity = $this->getManager()->save($savedEntity);
 
         $I->seeInDatabase('customer', [
             'company_name' => $savedEntity->getCompanyName(),

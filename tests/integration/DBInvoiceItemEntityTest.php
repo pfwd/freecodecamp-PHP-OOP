@@ -1,6 +1,8 @@
 <?php
 
+use App\DB\Builder\Builder;
 use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Invoice;
 use App\Entity\InvoiceItem;
 use App\Manager\InvoiceItemManager;
@@ -38,8 +40,7 @@ class DBInvoiceItemEntityTest extends Unit
             ->setUnits(7)
             ->setUnitPrice(100)
             ->setDescription('Development time')
-            ->setInvoice($invoice)
-        ;
+            ->setInvoice($invoice);
 
         $invoiceItemManager = $this->getManager();
         $savedEntity = $invoiceItemManager->save($entity);
@@ -63,7 +64,9 @@ class DBInvoiceItemEntityTest extends Unit
     protected function getInvoiceManager(): InvoiceManager
     {
         $connection = new Connection();
-        $repository = new InvoiceRepository($connection);
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new InvoiceRepository($connection, $queryBuilder);
         return new InvoiceManager($repository);
     }
 
@@ -73,7 +76,9 @@ class DBInvoiceItemEntityTest extends Unit
     protected function getManager(): InvoiceItemManager
     {
         $connection = new Connection();
-        $repository = new InvoiceItemRepository($connection);
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new InvoiceItemRepository($connection, $queryBuilder);
         return new InvoiceItemManager($repository);
     }
 
@@ -114,8 +119,7 @@ class DBInvoiceItemEntityTest extends Unit
             ->setUnits(7)
             ->setUnitPrice(100)
             ->setDescription('Development time')
-            ->setInvoice($invoice)
-        ;
+            ->setInvoice($invoice);
 
         $entity2 = new InvoiceItem();
         $entity2->setReference('Devtime')
@@ -123,8 +127,7 @@ class DBInvoiceItemEntityTest extends Unit
             ->setUnits(7)
             ->setUnitPrice(100)
             ->setDescription('Development time')
-            ->setInvoice($invoice)
-        ;
+            ->setInvoice($invoice);
 
         $manager = $this->getManager();
 
@@ -163,8 +166,7 @@ class DBInvoiceItemEntityTest extends Unit
             ->setUnits(7)
             ->setUnitPrice(100)
             ->setDescription('Development time')
-            ->setInvoice($invoice)
-        ;
+            ->setInvoice($invoice);
 
         $entity2 = new InvoiceItem();
         $entity2->setReference('Devtime')
@@ -172,8 +174,7 @@ class DBInvoiceItemEntityTest extends Unit
             ->setUnits(7)
             ->setUnitPrice(100)
             ->setDescription('Development time')
-            ->setInvoice($invoice)
-        ;
+            ->setInvoice($invoice);
 
         $manager = $this->getManager();
 

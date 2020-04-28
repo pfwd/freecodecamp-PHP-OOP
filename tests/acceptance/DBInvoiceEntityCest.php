@@ -1,6 +1,8 @@
 <?php
 
+use App\DB\Builder\Builder;
 use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Invoice;
 use App\Entity\Status;
 use App\Manager\InvoiceManager;
@@ -14,7 +16,6 @@ class DBInvoiceEntityCest
     {
     }
 
-
     /**
      * @param AcceptanceTester $I
      * @group db
@@ -26,7 +27,7 @@ class DBInvoiceEntityCest
         $entity->setVAT(1)
             ->setTotal(1)
             ->setReference('Test reference');
-        $manager = $this->getManager();
+        $manager = $this->getInvoiceManager();
         $manager->save($entity);
 
         $I->seeInDatabase('invoice', [
@@ -36,6 +37,29 @@ class DBInvoiceEntityCest
         ]);
     }
 
+    /**
+     * @return InvoiceManager
+     */
+    protected function getInvoiceManager(): InvoiceManager
+    {
+        $connection = new Connection();
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new InvoiceRepository($connection, $queryBuilder);
+        return new InvoiceManager($repository);
+    }
+
+    /**
+     * @return StatusManager
+     */
+    protected function getStatusManager(): StatusManager
+    {
+        $connection = new Connection();
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new StatusRepository($connection, $queryBuilder);
+        return new StatusManager($repository);
+    }
 
     /**
      * @param AcceptanceTester $I
@@ -48,7 +72,7 @@ class DBInvoiceEntityCest
         $entity->setVAT(1)
             ->setTotal(1)
             ->setReference('Test reference');
-        $manager = $this->getManager();
+        $manager = $this->getInvoiceManager();
         $savedEntity = $manager->save($entity);
 
         $I->seeInDatabase('invoice', [
@@ -83,10 +107,7 @@ class DBInvoiceEntityCest
         $status->setName('temp')
             ->setInternalName('TEMP');
 
-        $connection = new Connection();
-        $repository = new StatusRepository($connection);
-        $manager = new StatusManager($repository);
-        $savedStatus = $manager->save($status);
+        $savedStatus = $this->getStatusManager()->save($status);
 
         $invoice = new Invoice();
         $invoice->setVAT(1)
@@ -94,7 +115,7 @@ class DBInvoiceEntityCest
             ->setStatus($savedStatus)
             ->setReference('Test reference');
 
-        $manager = $this->getManager();;
+        $manager = $this->getInvoiceManager();;
         $savedInvoice = $manager->save($invoice);
 
         $I->seeInDatabase('invoice', [
@@ -108,13 +129,4 @@ class DBInvoiceEntityCest
 
     }
 
-    /**
-     * @return InvoiceManager
-     */
-    protected function getManager():InvoiceManager
-    {
-        $connection = new App\DB\Connection();
-        $repository = new InvoiceRepository($connection);
-        return new InvoiceManager($repository);
-    }
 }

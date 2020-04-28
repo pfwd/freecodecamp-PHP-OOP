@@ -10,13 +10,6 @@ use App\Hydration\InvoiceHydrator;
 
 class InvoiceRepository extends AbstractRepository
 {
-    private $connection;
-
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
-
     /**
      * @param int $id
      * @return Invoice|null
@@ -37,29 +30,6 @@ class InvoiceRepository extends AbstractRepository
             $entity = InvoiceHydrator::hydrate($row);
         }
         return $entity;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function findAll(): array
-    {
-        $results = [];
-        $sql = QueryBuilder::findAll('invoice');
-
-        $dbCon = $this->connection->open();
-        $statement = $dbCon->prepare($sql);
-        $statement->execute();
-        $rows = $statement->fetchAll();
-
-        if (is_array($rows)) {
-            foreach ($rows as $row) {
-                $results[] = InvoiceHydrator::hydrate($row);
-            }
-        }
-
-        return $results;
-
     }
 
     /**

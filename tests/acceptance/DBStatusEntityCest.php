@@ -1,6 +1,8 @@
 <?php
 
+use App\DB\Builder\Builder;
 use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Status;
 use App\Manager\StatusManager;
 use App\Repository\StatusRepository;
@@ -10,7 +12,6 @@ class DBStatusEntityCest
     public function _before(AcceptanceTester $I)
     {
     }
-
 
     /**
      * @param AcceptanceTester $I
@@ -22,9 +23,8 @@ class DBStatusEntityCest
         $entity = new Status();
         $entity->setName('Hello World2')
             ->setInternalName('HELLO_WORLD_2');
-        $connection = new Connection();
-        $repository = new StatusRepository($connection);
-        $manager = new StatusManager($repository);
+
+        $manager = $this->getManager();
         $manager->save($entity);
 
         $I->seeInDatabase('status', [
@@ -33,6 +33,17 @@ class DBStatusEntityCest
         ]);
     }
 
+    /**
+     * @return StatusManager
+     */
+    public function getManager(): StatusManager
+    {
+        $connection = new Connection();
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new StatusRepository($connection, $queryBuilder);
+        return new StatusManager($repository);
+    }
 
     /**
      * @param AcceptanceTester $I
@@ -44,9 +55,7 @@ class DBStatusEntityCest
         $entity = new Status();
         $entity->setName('Test Status')
             ->setInternalName('TEST_STATUS');
-        $connection = new Connection();
-        $repository = new StatusRepository($connection);
-        $manager = new StatusManager($repository);
+        $manager = $this->getManager();
         $savedEntity = $manager->save($entity);
 
         $I->seeInDatabase('status', [

@@ -10,20 +10,6 @@ use App\Hydration\InvoiceItemHydrator;
 class InvoiceItemRepository extends AbstractRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * InvoiceItemRepository constructor.
-     * @param Connection $connection
-     */
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
-
-    /**
      * @param int $id
      * @return null|InvoiceItem
      */
@@ -43,29 +29,6 @@ class InvoiceItemRepository extends AbstractRepository
             $entity = InvoiceItemHydrator::hydrate($row);
         }
         return $entity;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function findAll(): array
-    {
-        $results = [];
-        $sql = QueryBuilder::findAll('invoice_item');
-
-        $dbCon = $this->connection->open();
-        $statement = $dbCon->prepare($sql);
-        $statement->execute();
-        $rows = $statement->fetchAll();
-
-        if (is_array($rows)) {
-            foreach ($rows as $row) {
-                $results[] = InvoiceItemHydrator::hydrate($row);
-            }
-        }
-
-        return $results;
-
     }
 
     /**

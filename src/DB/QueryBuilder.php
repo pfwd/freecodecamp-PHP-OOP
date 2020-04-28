@@ -2,8 +2,9 @@
 
 namespace App\DB;
 
-class QueryBuilder
+class QueryBuilder extends QueryCreate implements QueryBuilderInterface
 {
+
     /**
      * @param array $data
      * @param string $table

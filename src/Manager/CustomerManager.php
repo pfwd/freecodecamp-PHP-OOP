@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Customer;
+use App\Hydration\CustomerHydrator;
 use App\Repository\CustomerRepository;
 
 class CustomerManager extends AbstractManager
@@ -37,7 +38,16 @@ class CustomerManager extends AbstractManager
      */
     public function findAll(): array
     {
-        return $this->repository->findAll();
+        $results = [];
+        $rows =  $this->repository->findAll('customer');
+
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+                $results[] = CustomerHydrator::hydrate($row);
+            }
+        }
+
+        return $results;
     }
 
     /**

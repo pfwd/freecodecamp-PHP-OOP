@@ -9,19 +9,6 @@ use App\Hydration\CustomerHydrator;
 
 class CustomerRepository extends AbstractRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * StatusRepository constructor.
-     * @param Connection $connection
-     */
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
 
     /**
      * @param Customer $entity
@@ -55,29 +42,6 @@ class CustomerRepository extends AbstractRepository
         }
 
         return $entity;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function findAll(): array
-    {
-        $results = [];
-        $sql = QueryBuilder::findAll('customer');
-
-        $dbCon = $this->connection->open();
-        $statement = $dbCon->prepare($sql);
-        $statement->execute();
-        $rows = $statement->fetchAll();
-
-        if (is_array($rows)) {
-            foreach ($rows as $row) {
-                $results[] = CustomerHydrator::hydrate($row);
-            }
-        }
-
-        return $results;
-
     }
 
     /**

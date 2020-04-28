@@ -1,6 +1,8 @@
 <?php
 
+use App\DB\Builder\Builder;
 use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Invoice;
 use App\Manager\InvoiceManager;
 use App\Repository\InvoiceRepository;
@@ -39,7 +41,9 @@ class DBInvoiceEntityTest extends Unit
     protected function getManager(): InvoiceManager
     {
         $connection = new Connection();
-        $repository = new InvoiceRepository($connection);
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new InvoiceRepository($connection, $queryBuilder);
         return new InvoiceManager($repository);
     }
 

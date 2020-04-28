@@ -3,16 +3,71 @@
 namespace Entity;
 
 
+use App\DB\Builder\Builder;
 use App\DB\QueryBuilder;
 use App\Entity\Invoice;
 use App\Entity\Status;
+use Codeception\Test\Unit;
+use UnitTester;
 
-class QueryBuilderTest extends \Codeception\Test\Unit
+class QueryBuilderTest extends Unit
 {
     /**
-     * @var \UnitTester
+     * @var UnitTester
      */
     protected $tester;
+
+    protected $builder;
+
+    public function _inject(Builder $builder)
+    {
+        $this->builder = $builder;
+    }
+
+    /**
+     * @group entity
+     * @group db
+     * @group db-query-builder
+     * @group db-query-builder-select
+     */
+    public function testSelect()
+    {
+        $queryBuilder = new QueryBuilder($this->builder);
+        $queryBuilder->select('invoice');
+
+        $this->assertSame('SELECT * FROM `invoice`', $queryBuilder->getSQL());
+    }
+
+    /**
+     * @group entity
+     * @group db
+     * @group db-query-builder
+     * @group db-query-builder-select-with-fields
+     */
+    public function testSelectWithFields()
+    {
+        $queryBuilder = new QueryBuilder($this->builder);
+        $queryBuilder->select('invoice', ['id', 'total']);
+
+        $this->assertSame('SELECT `id`, `total` FROM `invoice`', $queryBuilder->getSQL());
+    }
+
+
+    /**
+     * @group entity
+     * @group db
+     * @group db-query-builder
+     * @group db-query-builder-and-where
+     */
+    public function testAndWhere()
+    {
+        $queryBuilder = new QueryBuilder($this->builder);
+        $queryBuilder->andWhere('status_id', 4);
+
+        $this->assertSame('WHERE `status_id` =:status_id', $queryBuilder->getSQL());
+
+    }
+
 
     /**
      * @group entity
@@ -55,6 +110,7 @@ class QueryBuilderTest extends \Codeception\Test\Unit
 
         $this->assertSame($expected, $sql);
     }
+
     /**
      * @group entity
      * @group db
@@ -140,20 +196,18 @@ class QueryBuilderTest extends \Codeception\Test\Unit
         $status = new Status();
         $status->setInternalName('test')
             ->setName('test')
-            ->setId(2)
-            ;
+            ->setId(2);
         $entity = new Invoice();
         $entity->setReference('foo')
             ->setTotal(1)
             ->setVAT(1)
-            ->setStatus($status);
-        ;
+            ->setStatus($status);;
         $data = [
             'reference' => $entity->getReference(),
             'total' => $entity->getTotal(),
             'vat' => $entity->getVat()
         ];
-        if ($entity->getStatus() instanceof Status){
+        if ($entity->getStatus() instanceof Status) {
             $data['status_id'] = $entity->getStatus()->getId();
         }
 
@@ -201,7 +255,7 @@ class QueryBuilderTest extends \Codeception\Test\Unit
     public function testFindAllBy()
     {
         $sql = QueryBuilder::findAllBy('status', [
-            'name'  => 'name',
+            'name' => 'name',
             'internal_name' => 'internal_name'
         ]);
         $expected = "SELECT * FROM `status` WHERE `name` =:name AND `internal_name` =:internal_name";

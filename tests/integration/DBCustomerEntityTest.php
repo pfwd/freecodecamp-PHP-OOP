@@ -1,6 +1,10 @@
 <?php
 
+use App\DB\Builder\Builder;
+use App\DB\Builder\FieldCollection;
+use App\DB\Builder\WhereCollection;
 use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Customer;
 use App\Manager\CustomerManager;
 use App\Repository\CustomerRepository;
@@ -12,24 +16,6 @@ class DBCustomerEntityTest extends Unit
      * @var Code
      */
     protected $tester;
-
-    /**
-     * @return CustomerManager
-     */
-    protected function getManager(): CustomerManager
-    {
-        $connection = new Connection();
-        $repository = new CustomerRepository($connection);
-        return new CustomerManager($repository);
-    }
-
-    protected function _before()
-    {
-    }
-
-    protected function _after()
-    {
-    }
 
     /**
      * @group db-customer
@@ -49,6 +35,18 @@ class DBCustomerEntityTest extends Unit
         $this->assertSame($foundEntity->getFirstName(), $savedEntity->getFirstName());
         $this->assertSame($foundEntity->getLastName(), $savedEntity->getLastName());
         $this->assertSame($foundEntity->getCompanyName(), $savedEntity->getCompanyName());
+    }
+
+    /**
+     * @return CustomerManager
+     */
+    protected function getManager(): CustomerManager
+    {
+        $connection = new Connection();
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new CustomerRepository($connection, $queryBuilder);
+        return new CustomerManager($repository);
     }
 
     /**
@@ -94,5 +92,13 @@ class DBCustomerEntityTest extends Unit
         $foundEntity1 = $results[0];
 
         $this->assertInstanceOf(Customer::class, $foundEntity1);
+    }
+
+    protected function _before()
+    {
+    }
+
+    protected function _after()
+    {
     }
 }

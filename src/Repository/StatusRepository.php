@@ -2,27 +2,12 @@
 
 namespace App\Repository;
 
-use App\DB\Connection;
 use App\DB\QueryBuilder;
 use App\Entity\Status;
 use App\Hydration\StatusHydrator;
 
 class StatusRepository extends AbstractRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * StatusRepository constructor.
-     * @param Connection $connection
-     */
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
-
     /**
      * @param int $id
      * @return null|Status
@@ -43,29 +28,6 @@ class StatusRepository extends AbstractRepository
             $entity = StatusHydrator::hydrate($row);
         }
         return $entity;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function findAll(): array
-    {
-        $results = [];
-        $sql = QueryBuilder::findAll('status');
-
-        $dbCon = $this->connection->open();
-        $statement = $dbCon->prepare($sql);
-        $statement->execute();
-        $rows = $statement->fetchAll();
-
-        if (is_array($rows)) {
-            foreach ($rows as $row) {
-                $results[] = StatusHydrator::hydrate($row);
-            }
-        }
-
-        return $results;
-
     }
 
     /**

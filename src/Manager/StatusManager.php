@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Status;
+use App\Hydration\StatusHydrator;
 use App\Repository\StatusRepository;
 
 class StatusManager extends AbstractManager
@@ -37,7 +38,16 @@ class StatusManager extends AbstractManager
      */
     public function findAll(): array
     {
-        return $this->repository->findAll();
+        $results = [];
+        $rows = $this->repository->findAll('status');
+
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+                $results[] = StatusHydrator::hydrate($row);
+            }
+        }
+
+        return $results;
     }
 
     /**

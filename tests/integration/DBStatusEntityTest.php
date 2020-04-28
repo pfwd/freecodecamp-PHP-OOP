@@ -1,6 +1,8 @@
 <?php
 
+use App\DB\Builder\Builder;
 use App\DB\Connection;
+use App\DB\QueryBuilder;
 use App\Entity\Status;
 use App\Manager\StatusManager;
 use App\Repository\StatusRepository;
@@ -38,7 +40,9 @@ class DBStatusEntityTest extends Unit
     protected function getManager(): StatusManager
     {
         $connection = new Connection();
-        $repository = new StatusRepository($connection);
+        $builder = new Builder();
+        $queryBuilder = new QueryBuilder($builder);
+        $repository = new StatusRepository($connection, $queryBuilder);
         return new StatusManager($repository);
     }
 

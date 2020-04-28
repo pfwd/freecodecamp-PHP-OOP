@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Invoice;
+use App\Hydration\InvoiceHydrator;
 use App\Repository\InvoiceRepository;
 
 class InvoiceManager extends AbstractManager
@@ -38,7 +39,14 @@ class InvoiceManager extends AbstractManager
      */
     public function findAll(): array
     {
-        return $this->repository->findAll();
+        $results = [];
+        $rows =  $this->repository->findAll('invoice');
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+                $results[] = InvoiceHydrator::hydrate($row);
+            }
+        }
+        return $results;
     }
 
     /**
